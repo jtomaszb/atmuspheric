@@ -1,0 +1,18 @@
+--cpu Cortex-M4.fp
+".\targets\stm32f401_discovery\startup_stm32f401xx.o"
+".\targets\stm32f401_discovery\misc.o"
+".\targets\stm32f401_discovery\stm32f4xx_rcc.o"
+".\targets\stm32f401_discovery\stm32f4xx_gpio.o"
+".\targets\stm32f401_discovery\stm32f4xx_dma.o"
+".\targets\stm32f401_discovery\stm32f4xx_tim.o"
+".\targets\stm32f401_discovery\tm_stm32f4_delay.o"
+".\targets\stm32f401_discovery\tm_stm32f4_disco.o"
+".\targets\stm32f401_discovery\tm_stm32f4_gpio.o"
+".\targets\stm32f401_discovery\main.o"
+".\targets\stm32f401_discovery\stm32f4xx_it.o"
+".\targets\stm32f401_discovery\system_stm32f4xx.o"
+".\targets\stm32f401_discovery\ws2812b.o"
+--library_type=microlib --strict --scatter ".\Targets\STM32F401_Discovery\project.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\project.map" -o .\Targets\STM32F401_Discovery\project.axf
