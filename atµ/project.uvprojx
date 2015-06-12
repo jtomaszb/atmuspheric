@@ -663,6 +663,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -697,6 +702,26 @@
               <FileName>tm_stm32f4_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -747,6 +772,16 @@
               <FileName>ws2812b.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\ws2812b.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\usart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1409,6 +1444,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1443,6 +1483,26 @@
               <FileName>tm_stm32f4_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1493,6 +1553,16 @@
               <FileName>ws2812b.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\ws2812b.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\usart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2155,6 +2225,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2189,6 +2264,26 @@
               <FileName>tm_stm32f4_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2239,6 +2334,16 @@
               <FileName>ws2812b.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\ws2812b.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\usart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2901,6 +3006,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2935,6 +3045,26 @@
               <FileName>tm_stm32f4_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2985,6 +3115,16 @@
               <FileName>ws2812b.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\ws2812b.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\usart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3647,6 +3787,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3681,6 +3826,26 @@
               <FileName>tm_stm32f4_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3731,6 +3896,16 @@
               <FileName>ws2812b.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\ws2812b.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\usart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4393,6 +4568,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4427,6 +4607,26 @@
               <FileName>tm_stm32f4_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4477,6 +4677,16 @@
               <FileName>ws2812b.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\ws2812b.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\usart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5139,6 +5349,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5173,6 +5388,26 @@
               <FileName>tm_stm32f4_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5223,6 +5458,16 @@
               <FileName>ws2812b.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\ws2812b.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\usart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5885,6 +6130,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5919,6 +6169,26 @@
               <FileName>tm_stm32f4_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5969,6 +6239,16 @@
               <FileName>ws2812b.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\ws2812b.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\usart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6631,6 +6911,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6665,6 +6950,26 @@
               <FileName>tm_stm32f4_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6715,6 +7020,16 @@
               <FileName>ws2812b.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\ws2812b.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\usart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7377,6 +7692,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7411,6 +7731,26 @@
               <FileName>tm_stm32f4_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_swo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_swo.h</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_stdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\00-STM32F429_LIBRARIES\tm_stm32f4_stdio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7461,6 +7801,16 @@
               <FileName>ws2812b.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\ws2812b.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\usart.h</FilePath>
             </File>
           </Files>
         </Group>
