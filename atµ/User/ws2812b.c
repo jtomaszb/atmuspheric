@@ -19,9 +19,9 @@ DMA_InitTypeDef DMA_InitStructure;
  * This leaves us with a maximum string length of
  * (2^16 bytes per DMA stream - 42 bytes)/24 bytes per LED = 2728 LEDs
  */
-uint16_t LED_BYTE_Buffer[STRIP_LEN * 24 + 42];	
+uint16_t LED_BYTE_Buffer[STRIP_LEN * NUM_STRIPS * 24 + 42];	
 
-Pixel pixels[NUM_STRIPS][STRIP_LEN];
+Pixel pixels[NUM_STRIPS * STRIP_LEN];
 
 void WS2812_init(void)
 {
@@ -101,19 +101,29 @@ void WS2812_init(void)
 }
 
 
-void WS2812_updateStrip(uint8_t strip_index)
+//void WS2812_updateStrip(uint8_t strip_index)
+//{
+//	if (strip_index >= NUM_STRIPS)
+//		return;
+//	
+//	WS2812_send(pixels[strip_index], STRIP_LEN);
+//}
+
+void WS2812_updateLEDs(void)
 {
-	if (strip_index >= NUM_STRIPS)
-		return;
-	
-	WS2812_send(pixels[strip_index], STRIP_LEN);
+	WS2812_send(pixels, STRIP_LEN * NUM_STRIPS);
 }
+
+void WS2812_clearPixel(uint8_t strip_num, uint8_t pixel_index)
+{
+	WS2812_setPixelColor(0, 0, 0, strip_num, pixel_index);
+}	
 
 void WS2812_setPixelColor(uint8_t red, uint8_t green, uint8_t blue,  uint8_t strip_num, uint8_t pixel_index)
 {
-	pixels[strip_num][pixel_index].r = red;
-	pixels[strip_num][pixel_index].g = green;
-	pixels[strip_num][pixel_index].b = blue;
+	pixels[(strip_num * STRIP_LEN) + pixel_index].r = red;
+	pixels[(strip_num * STRIP_LEN) + pixel_index].g = green;
+	pixels[(strip_num * STRIP_LEN) + pixel_index].b = blue;
 }
 
 
@@ -146,7 +156,6 @@ static void WS2812_colorToBitArray(uint8_t color_val, uint16_t* byte_array)
  */
 void WS2812_send(const Pixel* pixels, const uint16_t _len)
 {
-	int i;
 	uint8_t led;
 	uint16_t buffersize;
 	uint16_t len = _len;
@@ -180,8 +189,8 @@ void WS2812_send(const Pixel* pixels, const uint16_t _len)
 	// PAP: Start DMA transfer after starting the timer. This prevents the
 	// DMA/PWM from dropping the first bit.
 	DMA_Cmd(DMA_STREAM, ENABLE); 			// enable DMA channel 6
-//	while(!DMA_GetFlagStatus(DMA_STREAM, DMA_TCIF)); 	// wait until transfer complete
-//	TIM_Cmd(PWM_TIMER, DISABLE); 					// disable Timer 3
-//	DMA_Cmd(DMA_STREAM, DISABLE); 			// disable DMA channel 6
-//	DMA_ClearFlag(DMA_STREAM, DMA_TCIF); 				// clear DMA1 Channel 6 transfer complete flag
+	while(!DMA_GetFlagStatus(DMA_STREAM, DMA_TCIF)); 	// wait until transfer complete
+	TIM_Cmd(PWM_TIMER, DISABLE); 					// disable Timer 3
+	DMA_Cmd(DMA_STREAM, DISABLE); 			// disable DMA channel 6
+	DMA_ClearFlag(DMA_STREAM, DMA_TCIF); 				// clear DMA1 Channel 6 transfer complete flag
 }

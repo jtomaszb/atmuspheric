@@ -29,6 +29,6 @@ typedef struct
 void WS2812_init(void);
 void WS2812_send(const Pixel* pixel, const uint16_t _len);
 void WS2812_setPixelColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t strip_num, uint8_t pixel_index);
-void WS2812_updateStrip(uint8_t strip_index);
+void WS2812_updateLEDs(void);
 
 #endif // _WS2812B_H_

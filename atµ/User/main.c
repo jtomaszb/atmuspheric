@@ -4,13 +4,18 @@
 #include "usart.h"
 #include "tm_stm32f4_swo.h"
 #include "tm_stm32f4_delay.h"
+#include "auto_sampler.h"
+#include "fft_processor.h"
 
 int main(void) {
 	int i;
 	uint8_t j = 0;
+	uint8_t k = 0;
+	uint8_t ascending = 1;
 	
 	TM_SWO_Init();
 	TM_DELAY_Init();
+	AutoSampler_Init();	
 	
 	WS2812_init();
 	init_USART1(9600); // initialize USART1 @ 9600 baud
@@ -19,23 +24,38 @@ int main(void) {
 
 	TM_SWO_Printf("Hello from MCU via SWO\n");
 	
+	FFTProcessor_Run();
+	
 	while (1)
 	{	
-//		/* Print via SWO */
-//		TM_SWO_Printf("%d\n", TM_DELAY_Time());
-//		
-//		/* Delay some time */
-//		Delayms(500);
-		
-		for (i = 0; i < STRIP_LEN; i++)
+		for (j = 0; j < NUM_STRIPS; j++)
 		{
-			WS2812_setPixelColor( 110 - 10 * i, 0, 10 * i, 0, i); 
+			for (i = 0; i < STRIP_LEN; i++)
+			{
+				WS2812_setPixelColor( 255 - k, k, 0, j, i); 
+			}
+			
+			
+			if (ascending == 1)
+			{
+				if (k < 255)
+					k++;
+				else
+					ascending = 0;
+			}
+			else if (ascending == 0)
+			{
+				if (k > 0)
+					k--;
+				else
+					ascending = 1;
+			}
+			
 		}
-		
-		WS2812_updateStrip(0);
-		Delay(10000L);
+		Delay(10000UL);
+		WS2812_updateLEDs();
 	}
-	
+}
 	/* workloop */
 	
 	/*
@@ -67,4 +87,3 @@ int main(void) {
 				-- translate RGB values to PWM delays
 				-- start DMA
 	*/
-}

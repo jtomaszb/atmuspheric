@@ -668,6 +668,11 @@
               <FileType>1</FileType>
               <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -782,6 +787,56 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\auto_sampler.c</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\fft_processor.c</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\auto_sampler.h</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\fft_processor.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cmplx_mag_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\CommonTables\arm_common_tables.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1144,7 +1199,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F401xx,USE_STDPERIPH_DRIVER,STM32F4XX,KEIL_IDE,TM_DISCO_STM32F401_DISCOVERY,HSE_VALUE=8000000,PLL_M=8,PLL_N=336,PLL_P=4,PLL_Q=7</Define>
+              <Define>STM32F401xx,USE_STDPERIPH_DRIVER,STM32F4XX,KEIL_IDE,TM_DISCO_STM32F401_DISCOVERY,HSE_VALUE=8000000,PLL_M=8,PLL_N=336,PLL_P=4,PLL_Q=7,ARM_MATH_CM4,__FPU_PRESENT=1</Define>
               <Undefine></Undefine>
               <IncludePath>.\User;.\TM;..\00-STM32F429_LIBRARIES;..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\inc;..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src;..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\Device\ST\STM32F4xx\Include;..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm;..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\Include</IncludePath>
             </VariousControls>
@@ -1449,6 +1504,11 @@
               <FileType>1</FileType>
               <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1563,6 +1623,56 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\auto_sampler.c</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\fft_processor.c</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\auto_sampler.h</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\fft_processor.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cmplx_mag_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\CommonTables\arm_common_tables.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2230,6 +2340,11 @@
               <FileType>1</FileType>
               <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2344,6 +2459,56 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\auto_sampler.c</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\fft_processor.c</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\auto_sampler.h</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\fft_processor.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cmplx_mag_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\CommonTables\arm_common_tables.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3011,6 +3176,11 @@
               <FileType>1</FileType>
               <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3125,6 +3295,56 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\auto_sampler.c</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\fft_processor.c</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\auto_sampler.h</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\fft_processor.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cmplx_mag_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\CommonTables\arm_common_tables.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3792,6 +4012,11 @@
               <FileType>1</FileType>
               <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3906,6 +4131,56 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\auto_sampler.c</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\fft_processor.c</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\auto_sampler.h</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\fft_processor.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cmplx_mag_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\CommonTables\arm_common_tables.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4573,6 +4848,11 @@
               <FileType>1</FileType>
               <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4687,6 +4967,56 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\auto_sampler.c</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\fft_processor.c</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\auto_sampler.h</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\fft_processor.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cmplx_mag_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\CommonTables\arm_common_tables.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5354,6 +5684,11 @@
               <FileType>1</FileType>
               <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5468,6 +5803,56 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\auto_sampler.c</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\fft_processor.c</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\auto_sampler.h</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\fft_processor.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cmplx_mag_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\CommonTables\arm_common_tables.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6135,6 +6520,11 @@
               <FileType>1</FileType>
               <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6249,6 +6639,56 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\auto_sampler.c</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\fft_processor.c</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\auto_sampler.h</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\fft_processor.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cmplx_mag_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\CommonTables\arm_common_tables.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6916,6 +7356,11 @@
               <FileType>1</FileType>
               <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7030,6 +7475,56 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\auto_sampler.c</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\fft_processor.c</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\auto_sampler.h</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\fft_processor.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cmplx_mag_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\CommonTables\arm_common_tables.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7697,6 +8192,11 @@
               <FileType>1</FileType>
               <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7811,6 +8311,56 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\auto_sampler.c</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\fft_processor.c</FilePath>
+            </File>
+            <File>
+              <FileName>auto_sampler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\auto_sampler.h</FilePath>
+            </File>
+            <File>
+              <FileName>fft_processor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\fft_processor.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cmplx_mag_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cfft_radix4_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\CommonTables\arm_common_tables.c</FilePath>
             </File>
           </Files>
         </Group>
