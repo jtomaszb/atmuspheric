@@ -1,20 +1,25 @@
 #include "fft_processor.h"
 #include "auto_sampler.h"
 
+//====================================================================================
+//	VARIABLE DECLARATIONS
+//====================================================================================
+
+
 /* Global variables */
 float32_t Input[SAMPLES];
 float32_t Output[FFT_SIZE];
 
 arm_cfft_radix4_instance_f32 S;	/* ARM CFFT module */
-float32_t maxValue;				/* Max FFT value is stored here */
-uint32_t maxIndex;				/* Index in Output array where max value is */
 uint16_t i;
+
 
 //====================================================================================
 //	FUNCTION DEFINITIONS
 //====================================================================================
 void FFTProcessor_Run(void) {
-	uint16_t i;
+ 
+	int i = 0;
 	
 	// Start autosampler, grab data, then tunr off sampler
 	AutoSampler_Start();
@@ -29,7 +34,7 @@ void FFTProcessor_Run(void) {
 		Input[(uint16_t)(i + 1)] = 0;
 	}
 	AutoSampler_Stop();
-	
+ 
 	/* Initialize the CFFT/CIFFT module, intFlag = 0, doBitReverse = 1 */
 	arm_cfft_radix4_init_f32(&S, FFT_SIZE, 0, 1);
 	
@@ -38,6 +43,4 @@ void FFTProcessor_Run(void) {
 	
 	/* Process the data through the Complex Magnitude Module for calculating the magnitude at each bin */
 	arm_cmplx_mag_f32(Input, Output, FFT_SIZE);
-	
-	
 }
