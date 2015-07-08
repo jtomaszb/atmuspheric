@@ -4,10 +4,13 @@
 #include "stm32f4xx_usart.h" // under Libraries/STM32F4xx_StdPeriph_Driver/inc and src
 #include <misc.h>			 // I recommend you have a look at these in the ST firmware folder
 #include "tm_stm32f4_swo.h"
+#include <string.h>
+#include "ws2812b.h"
 
+#define MAX_STRLEN 99 // this is the maximum string length of our string in characters
+volatile char received_string[MAX_STRLEN]; // this will hold the recieved string
+volatile uint8_t cnt = 0; // this counter is used to determine the string length
 
-#define MAX_STRLEN 32 // this is the maximum string length of our string in characters
-volatile char received_string[MAX_STRLEN+1]; // this will hold the recieved string
 
 /* This funcion initializes the USART1 peripheral
  * 
@@ -108,26 +111,39 @@ void USART_puts(USART_TypeDef* USARTx, volatile char *s){
 	}
 }
 
+void USART_copyBuffToPixels(uint8_t* pixel_buff, uint16_t length)
+{
+	memcpy(pixel_buff, (void *)received_string, length);
+}
+
 // this is the interrupt request handler (IRQ) for ALL USART1 interrupts
 void USART1_IRQHandler(void){
 	
 	// check if the USART1 receive interrupt flag was set
 	if( USART_GetITStatus(USART1, USART_IT_RXNE) ){
-		
-		static uint8_t cnt = 0; // this counter is used to determine the string length
 		char t = USART1->DR; // the character from the USART1 data register is saved in t
 		
 		/* check if the received character is not the LF character (used to determine end of string) 
 		 * or the if the maximum string length has been been reached 
 		 */
-		if( (t != '\n') && (cnt < MAX_STRLEN) ){ 
+		if ( /*(t != '\n') && */ (cnt < MAX_STRLEN) )
+		{
 			received_string[cnt] = t;
 			cnt++;
+			
+			if (cnt == MAX_STRLEN)
+			{
+				cnt = 0;
+				TM_SWO_Printf((const char *)received_string);
+				USART_copyBuffToPixels((uint8_t*)pixels, MAX_STRLEN);
+			}
 		}
-		else{ // otherwise reset the character counter and print the received string
+		else
+		{ // otherwise reset the character counter and print the received string
 			received_string[cnt] = t;
 			cnt = 0;
 			TM_SWO_Printf((const char *)received_string);
+			USART_copyBuffToPixels((uint8_t*)pixels, MAX_STRLEN);
 		}
 	}
 }
