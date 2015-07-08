@@ -19,15 +19,23 @@
 #define TIM_COMPARE_HIGH		18
 #define TIM_COMPARE_LOW			8
 
+#define R_OFFSET 0
+#define G_OFFSET 2
+#define B_OFFSET 1
+
+#define PIXEL_SIZE 3
+
 typedef struct 
 {
 	uint8_t r;
-	uint8_t b;
 	uint8_t g;
+	uint8_t b;
 } Pixel;
 
+extern uint8_t pixels[NUM_STRIPS * STRIP_LEN * PIXEL_SIZE];
+
 void WS2812_init(void);
-void WS2812_send(const Pixel* pixel, const uint16_t _len);
+void WS2812_send(const uint8_t* pixel, const uint16_t _len);
 void WS2812_setPixelColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t strip_num, uint8_t pixel_index);
 void WS2812_updateLEDs(void);
 

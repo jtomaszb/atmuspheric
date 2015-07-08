@@ -21,7 +21,7 @@ DMA_InitTypeDef DMA_InitStructure;
  */
 uint16_t LED_BYTE_Buffer[STRIP_LEN * NUM_STRIPS * 24 + 42];	
 
-Pixel pixels[NUM_STRIPS * STRIP_LEN];
+uint8_t pixels[NUM_STRIPS * STRIP_LEN * PIXEL_SIZE];
 
 void WS2812_init(void)
 {
@@ -121,9 +121,9 @@ void WS2812_clearPixel(uint8_t strip_num, uint8_t pixel_index)
 
 void WS2812_setPixelColor(uint8_t red, uint8_t green, uint8_t blue,  uint8_t strip_num, uint8_t pixel_index)
 {
-	pixels[(strip_num * STRIP_LEN) + pixel_index].r = red;
-	pixels[(strip_num * STRIP_LEN) + pixel_index].g = green;
-	pixels[(strip_num * STRIP_LEN) + pixel_index].b = blue;
+	pixels[(strip_num * STRIP_LEN * PIXEL_SIZE) + (PIXEL_SIZE * pixel_index) + R_OFFSET] = red;
+	pixels[(strip_num * STRIP_LEN * PIXEL_SIZE) + (PIXEL_SIZE * pixel_index) + G_OFFSET] = green;
+	pixels[(strip_num * STRIP_LEN * PIXEL_SIZE) + (PIXEL_SIZE * pixel_index) + B_OFFSET] = blue;
 }
 
 
@@ -154,7 +154,7 @@ static void WS2812_colorToBitArray(uint8_t color_val, uint16_t* byte_array)
  * the LED that is the furthest away from the controller (the point where
  * data is injected into the chain)
  */
-void WS2812_send(const Pixel* pixels, const uint16_t _len)
+void WS2812_send(const uint8_t* pixels, const uint16_t _len)
 {
 	uint8_t led;
 	uint16_t buffersize;
@@ -167,9 +167,9 @@ void WS2812_send(const Pixel* pixels, const uint16_t _len)
 	// correct pulse widths according to color values
 	while (len)
 	{
-		WS2812_colorToBitArray(pixels[led].r, &LED_BYTE_Buffer[led * 24]); 	
-		WS2812_colorToBitArray(pixels[led].b, &LED_BYTE_Buffer[led * 24 + 8]); 	
-		WS2812_colorToBitArray(pixels[led].g, &LED_BYTE_Buffer[led * 24 + 16]); 	
+		WS2812_colorToBitArray(pixels[led * PIXEL_SIZE + R_OFFSET], &LED_BYTE_Buffer[led * 24]); 	
+		WS2812_colorToBitArray(pixels[led * PIXEL_SIZE + B_OFFSET], &LED_BYTE_Buffer[led * 24 + 8]); 	
+		WS2812_colorToBitArray(pixels[led * PIXEL_SIZE + G_OFFSET], &LED_BYTE_Buffer[led * 24 + 16]); 	
 		
 		led++;
 		len--;
