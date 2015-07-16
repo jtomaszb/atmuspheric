@@ -32,9 +32,10 @@ typedef struct
 	uint8_t b;
 } Pixel;
 
-extern uint8_t pixels[NUM_STRIPS * STRIP_LEN * PIXEL_SIZE];
+extern uint8_t gPixels[NUM_STRIPS * STRIP_LEN * PIXEL_SIZE];
 
 void WS2812_init(void);
+void WS2812_updateStrip(uint8_t strip_index);
 void WS2812_send(const uint8_t* pixel, const uint16_t _len);
 void WS2812_setPixelColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t strip_num, uint8_t pixel_index);
 void WS2812_updateLEDs(void);

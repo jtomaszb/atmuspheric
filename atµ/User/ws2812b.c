@@ -21,7 +21,9 @@ DMA_InitTypeDef DMA_InitStructure;
  */
 uint16_t LED_BYTE_Buffer[STRIP_LEN * NUM_STRIPS * 24 + 42];	
 
-uint8_t pixels[NUM_STRIPS * STRIP_LEN * PIXEL_SIZE];
+uint8_t gPixels[NUM_STRIPS * STRIP_LEN * PIXEL_SIZE];
+
+uint8_t curr_strip = 0;
 
 void WS2812_init(void)
 {
@@ -29,7 +31,10 @@ void WS2812_init(void)
 		/* Compute the prescaler value */
 	RCC_ClocksTypeDef clocks;
 	
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+
 	/* GPIOB Configuration: PWM_TIMER Channel 1 as alternate function push-pull */
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
@@ -109,9 +114,69 @@ void WS2812_init(void)
 //	WS2812_send(pixels[strip_index], STRIP_LEN);
 //}
 
+void WS2812_updateStrip(uint8_t strip_index)
+{
+	if (strip_index != curr_strip && strip_index < NUM_STRIPS)
+	{
+		curr_strip = strip_index;
+
+		// UNDO PWM PIN CONFIG FOR ALL PINS
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
+		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+		GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+		GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+		GPIO_Init(GPIOC, &GPIO_InitStructure);
+
+		// SET UP TO CONFIG PIN FOR PWM
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+		
+		switch (curr_strip)
+		{
+			case 0:
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+				GPIO_Init(GPIOB, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_TIM3);
+				break;
+
+			case 1:
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+				GPIO_Init(GPIOA, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_TIM3);
+				break;
+
+			case 2:
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+				GPIO_Init(GPIOC, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_TIM3);
+				break;
+			
+			default:
+				break;
+		}
+	}
+	else if (strip_index >= NUM_STRIPS)
+	{
+		return;
+	}
+	
+	WS2812_send(gPixels + STRIP_LEN * PIXEL_SIZE * strip_index, STRIP_LEN);
+}
+
 void WS2812_updateLEDs(void)
 {
-	WS2812_send(pixels, STRIP_LEN * NUM_STRIPS);
+	uint8_t i;
+	
+	for (i = 0; i < NUM_STRIPS; i++)
+	{
+		WS2812_updateStrip(i);
+	}
 }
 
 void WS2812_clearPixel(uint8_t strip_num, uint8_t pixel_index)
@@ -121,9 +186,9 @@ void WS2812_clearPixel(uint8_t strip_num, uint8_t pixel_index)
 
 void WS2812_setPixelColor(uint8_t red, uint8_t green, uint8_t blue,  uint8_t strip_num, uint8_t pixel_index)
 {
-	pixels[(strip_num * STRIP_LEN * PIXEL_SIZE) + (PIXEL_SIZE * pixel_index) + R_OFFSET] = red;
-	pixels[(strip_num * STRIP_LEN * PIXEL_SIZE) + (PIXEL_SIZE * pixel_index) + G_OFFSET] = green;
-	pixels[(strip_num * STRIP_LEN * PIXEL_SIZE) + (PIXEL_SIZE * pixel_index) + B_OFFSET] = blue;
+	gPixels[(strip_num * STRIP_LEN * PIXEL_SIZE) + (PIXEL_SIZE * pixel_index) + R_OFFSET] = red;
+	gPixels[(strip_num * STRIP_LEN * PIXEL_SIZE) + (PIXEL_SIZE * pixel_index) + G_OFFSET] = green;
+	gPixels[(strip_num * STRIP_LEN * PIXEL_SIZE) + (PIXEL_SIZE * pixel_index) + B_OFFSET] = blue;
 }
 
 

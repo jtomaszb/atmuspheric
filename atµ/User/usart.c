@@ -135,7 +135,7 @@ void USART1_IRQHandler(void){
 			{
 				cnt = 0;
 				TM_SWO_Printf((const char *)received_string);
-				USART_copyBuffToPixels((uint8_t*)pixels, MAX_STRLEN);
+				USART_copyBuffToPixels((uint8_t*)gPixels, MAX_STRLEN);
 			}
 		}
 		else
@@ -143,7 +143,7 @@ void USART1_IRQHandler(void){
 			received_string[cnt] = t;
 			cnt = 0;
 			TM_SWO_Printf((const char *)received_string);
-			USART_copyBuffToPixels((uint8_t*)pixels, MAX_STRLEN);
+			USART_copyBuffToPixels((uint8_t*)gPixels, MAX_STRLEN);
 		}
 	}
 }
