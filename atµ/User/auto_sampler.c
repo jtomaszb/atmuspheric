@@ -96,11 +96,11 @@ void AutoSampler_Init(void) {
 	
 	
 	//====================================================================================
-	//   Configuring GPIO PC0, Channel 10
+	//   Configuring GPIO PC1, Channel 11
 	//====================================================================================
   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
  
-	gpio.GPIO_Pin   = GPIO_Pin_0;
+	gpio.GPIO_Pin   = GPIO_Pin_1;
 	gpio.GPIO_Mode  = GPIO_Mode_AIN;
 	gpio.GPIO_Speed = GPIO_Speed_50MHz;
 	gpio.GPIO_PuPd  = GPIO_PuPd_NOPULL;
