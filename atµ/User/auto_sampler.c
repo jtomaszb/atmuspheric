@@ -28,7 +28,7 @@ void AutoSampler_Init(void) {
  
   TIM_TimeBaseStructInit(&TIM3_TimeBase); 
   TIM3_TimeBase.TIM_Period        = (uint16_t)11; // Trigger = CK_CNT/(11+1) = 35kHz
-  TIM3_TimeBase.TIM_Prescaler     = 100;          // CK_CNT = 42MHz/100 = 420kHz
+  TIM3_TimeBase.TIM_Prescaler     = 200;          // CK_CNT = 84MHz/200 = 420kHz
   TIM3_TimeBase.TIM_ClockDivision = 0;
   TIM3_TimeBase.TIM_CounterMode   = TIM_CounterMode_Up;  
   TIM_TimeBaseInit(TIM3, &TIM3_TimeBase);
