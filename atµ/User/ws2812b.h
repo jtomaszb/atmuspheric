@@ -25,6 +25,10 @@
 
 #define PIXEL_SIZE 3
 
+#define MAX_BRIGHTNESS 0xFF
+
+#define apply_brightness(color, brightness) ((uint16_t)color * (uint16_t)brightness / MAX_BRIGHTNESS)
+
 typedef struct 
 {
 	uint8_t r;
@@ -38,6 +42,7 @@ void WS2812_init(void);
 void WS2812_updateStrip(uint8_t strip_index);
 void WS2812_send(const uint8_t* pixel, const uint16_t _len);
 void WS2812_setPixelColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t strip_num, uint8_t pixel_index);
+void WS2812_setPixelBrightness(uint8_t brightness, uint8_t strip_num, uint8_t pixel_index);
 void WS2812_updateLEDs(void);
 
 #endif // _WS2812B_H_

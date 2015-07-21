@@ -10,9 +10,9 @@ int height[3];
 int i, j, k;
 
 int main(void) {
+
 	AutoSampler_Init();
 	init_USART1(9600);
-  //AutoSampler_Start();
 	WS2812_init();
 	
 	while (1)
@@ -31,14 +31,13 @@ int main(void) {
 
 			// turn on pixels to height
 			for(j = 0; j < height[i]; j++)
-				WS2812_setPixelColor(10, 10, 10, i, j);
+				WS2812_setPixelBrightness(MAX_BRIGHTNESS, i, j);
 			
 			// turn off pixels past height
 			for(j = height[i]; j < 11; j++)
-				WS2812_setPixelColor(0, 0, 0, i, j);
+				WS2812_setPixelBrightness(0, i, j);
 		}
 			
-		WS2812_updateLEDs();
-		
+		WS2812_updateLEDs();		
 	}
 }

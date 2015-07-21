@@ -22,6 +22,7 @@ DMA_InitTypeDef DMA_InitStructure;
 uint16_t LED_BYTE_Buffer[STRIP_LEN * NUM_STRIPS * 24 + 42];	
 
 uint8_t gPixels[NUM_STRIPS * STRIP_LEN * PIXEL_SIZE];
+uint8_t gPixelBrightness[NUM_STRIPS * STRIP_LEN];
 
 uint8_t curr_strip = 0;
 
@@ -101,16 +102,9 @@ void WS2812_init(void)
 	
 	/* PWM_TIMER CC1 DMA Request enable */
 	TIM_DMACmd(PWM_TIMER, DMA_SOURCE, ENABLE);
+	
+	memset(gPixelBrightness, MAX_BRIGHTNESS, sizeof(gPixelBrightness));
 }
-
-
-//void WS2812_updateStrip(uint8_t strip_index)
-//{
-//	if (strip_index >= NUM_STRIPS)
-//		return;
-//	
-//	WS2812_send(pixels[strip_index], STRIP_LEN);
-//}
 
 void WS2812_updateStrip(uint8_t strip_index)
 {
@@ -189,6 +183,10 @@ void WS2812_setPixelColor(uint8_t red, uint8_t green, uint8_t blue,  uint8_t str
 	gPixels[(strip_num * STRIP_LEN * PIXEL_SIZE) + (PIXEL_SIZE * pixel_index) + B_OFFSET] = blue;
 }
 
+void WS2812_setPixelBrightness(uint8_t brightness, uint8_t strip_num, uint8_t pixel_index)
+{
+	gPixelBrightness[STRIP_LEN * strip_num + pixel_index] = brightness;
+}
 
 static void WS2812_colorToBitArray(uint8_t color_val, uint16_t* byte_array)
 {
@@ -230,9 +228,9 @@ void WS2812_send(const uint8_t* pixels, const uint16_t _len)
 	// correct pulse widths according to color values
 	while (len)
 	{
-		WS2812_colorToBitArray(pixels[led * PIXEL_SIZE + R_OFFSET], &LED_BYTE_Buffer[led * 24]); 	
-		WS2812_colorToBitArray(pixels[led * PIXEL_SIZE + B_OFFSET], &LED_BYTE_Buffer[led * 24 + 8]); 	
-		WS2812_colorToBitArray(pixels[led * PIXEL_SIZE + G_OFFSET], &LED_BYTE_Buffer[led * 24 + 16]); 	
+		WS2812_colorToBitArray(apply_brightness(pixels[led * PIXEL_SIZE + R_OFFSET], gPixelBrightness[led]), &LED_BYTE_Buffer[led * 24]); 	
+		WS2812_colorToBitArray(apply_brightness(pixels[led * PIXEL_SIZE + B_OFFSET], gPixelBrightness[led]), &LED_BYTE_Buffer[led * 24 + 8]); 	
+		WS2812_colorToBitArray(apply_brightness(pixels[led * PIXEL_SIZE + G_OFFSET], gPixelBrightness[led]), &LED_BYTE_Buffer[led * 24 + 16]); 	
 		
 		led++;
 		len--;
