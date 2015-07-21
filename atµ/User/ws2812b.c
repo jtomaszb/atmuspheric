@@ -27,8 +27,7 @@ uint8_t curr_strip = 0;
 
 void WS2812_init(void)
 {
-	uint16_t PrescalerValue;
-		/* Compute the prescaler value */
+	/* Compute the prescaler value */
 	RCC_ClocksTypeDef clocks;
 	
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
@@ -45,7 +44,6 @@ void WS2812_init(void)
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 
 	RCC_GetClocksFreq(&clocks);
-	PrescalerValue = (uint16_t) ((clocks.SYSCLK_Frequency / 4) / 24000000) - 1;
 	/* Time base configuration */
 	TIM_TimeBaseStructure.TIM_Period = TIM_PERIOD; // 800kHz 
 	TIM_TimeBaseStructure.TIM_Prescaler = 3;//32000;//PrescalerValue;
@@ -253,9 +251,9 @@ void WS2812_send(const uint8_t* pixels, const uint16_t _len)
 	
 	// PAP: Start DMA transfer after starting the timer. This prevents the
 	// DMA/PWM from dropping the first bit.
-	DMA_Cmd(DMA_STREAM, ENABLE); 			// enable DMA channel 6
+	DMA_Cmd(DMA_STREAM, ENABLE); 			// enable DMA channel 5
 	while(!DMA_GetFlagStatus(DMA_STREAM, DMA_TCIF)); 	// wait until transfer complete
 	TIM_Cmd(PWM_TIMER, DISABLE); 					// disable Timer 3
-	DMA_Cmd(DMA_STREAM, DISABLE); 			// disable DMA channel 6
-	DMA_ClearFlag(DMA_STREAM, DMA_TCIF); 				// clear DMA1 Channel 6 transfer complete flag
+	DMA_Cmd(DMA_STREAM, DISABLE); 			// disable DMA channel 5
+	DMA_ClearFlag(DMA_STREAM, DMA_TCIF); 				// clear DMA1 Channel 5 transfer complete flag
 }

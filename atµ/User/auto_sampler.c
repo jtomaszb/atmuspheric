@@ -78,7 +78,7 @@ void AutoSampler_Init(void) {
   ADC_INIT.ADC_NbrOfConversion      = 1;
   ADC_Init(ADC1, &ADC_INIT);
 
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 1, ADC_SampleTime_3Cycles);
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 1, ADC_SampleTime_3Cycles);
   ADC_DMARequestAfterLastTransferCmd(ADC1, ENABLE);
   
 	// These are done in start function

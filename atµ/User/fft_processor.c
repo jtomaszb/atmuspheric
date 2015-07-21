@@ -11,7 +11,6 @@ float32_t Input[SAMPLES];
 float32_t Output[FFT_SIZE];
 
 arm_cfft_radix4_instance_f32 S;	/* ARM CFFT module */
-uint16_t i;
 
 
 //====================================================================================
