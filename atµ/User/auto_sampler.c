@@ -13,7 +13,7 @@ int newDataAvailable = 0;							// Flag set by ADC ISR when new data available
 void AutoSampler_Init(void) {
 	
 	// Declare Timer, ADC, DMA, and NVIC init structs	
-	TIM_TimeBaseInitTypeDef 	TIM3_TimeBase;
+	TIM_TimeBaseInitTypeDef 	TIM2_TimeBase;
 	ADC_InitTypeDef       		ADC_INIT;
 	ADC_CommonInitTypeDef 		ADC_COMMON;
 	DMA_InitTypeDef       		DMA_INIT;
@@ -22,19 +22,19 @@ void AutoSampler_Init(void) {
 
 
 	//====================================================================================
-	//   Configuring TIM3 to trigger at 35kHz, or the ADC sampling rate
+	//   Configuring TIM2 to trigger at 35kHz, or the ADC sampling rate
 	//====================================================================================
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
  
-  TIM_TimeBaseStructInit(&TIM3_TimeBase); 
-  TIM3_TimeBase.TIM_Period        = (uint16_t)11; // Trigger = CK_CNT/(11+1) = 35kHz
-  TIM3_TimeBase.TIM_Prescaler     = 200;          // CK_CNT = 84MHz/200 = 420kHz
-  TIM3_TimeBase.TIM_ClockDivision = 0;
-  TIM3_TimeBase.TIM_CounterMode   = TIM_CounterMode_Up;  
-  TIM_TimeBaseInit(TIM3, &TIM3_TimeBase);
-  TIM_SelectOutputTrigger(TIM3, TIM_TRGOSource_Update);
+  TIM_TimeBaseStructInit(&TIM2_TimeBase); 
+  TIM2_TimeBase.TIM_Period        = (uint16_t)11; // Trigger = CK_CNT/(11+1) = 35kHz
+  TIM2_TimeBase.TIM_Prescaler     = 200;          // CK_CNT = 84MHz/200 = 420kHz
+  TIM2_TimeBase.TIM_ClockDivision = 0;
+  TIM2_TimeBase.TIM_CounterMode   = TIM_CounterMode_Up;  
+  TIM_TimeBaseInit(TIM2, &TIM2_TimeBase);
+  TIM_SelectOutputTrigger(TIM2, TIM_TRGOSource_Update);
 
-  //TIM_Cmd(TIM3, ENABLE);	// this is done in the start function
+  //TIM_Cmd(TIM2, ENABLE);	// this is done in the start function
 	
 	
 	
@@ -73,7 +73,7 @@ void AutoSampler_Init(void) {
   ADC_INIT.ADC_ScanConvMode         = DISABLE;
   ADC_INIT.ADC_ContinuousConvMode   = DISABLE; // ENABLE for max ADC sampling frequency
   ADC_INIT.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_Rising;
-  ADC_INIT.ADC_ExternalTrigConv     = ADC_ExternalTrigConv_T3_TRGO;
+  ADC_INIT.ADC_ExternalTrigConv     = ADC_ExternalTrigConv_T2_TRGO;
   ADC_INIT.ADC_DataAlign            = ADC_DataAlign_Right;
   ADC_INIT.ADC_NbrOfConversion      = 1;
   ADC_Init(ADC1, &ADC_INIT);
@@ -119,14 +119,14 @@ void AutoSampler_Start() {
 	ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
 	ADC_DMACmd(ADC1, ENABLE);
 	ADC_Cmd(ADC1, ENABLE);
-	TIM_Cmd(TIM3, ENABLE);
+	TIM_Cmd(TIM2, ENABLE);
 }
 
 void AutoSampler_Stop() {
 	ADC_ITConfig(ADC1, ADC_IT_EOC, DISABLE);
 	ADC_DMACmd(ADC1, DISABLE);
 	ADC_Cmd(ADC1, DISABLE);
-	TIM_Cmd(TIM3, DISABLE);
+	TIM_Cmd(TIM2, DISABLE);
 }
 
 int AutoSampler_Available() {
