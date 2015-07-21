@@ -158,7 +158,7 @@ void WS2812_updateStrip(uint8_t strip_index)
 		return;
 	}
 	
-	WS2812_send(gPixels + STRIP_LEN * PIXEL_SIZE * strip_index, STRIP_LEN);
+	WS2812_send(gPixels + STRIP_LEN * PIXEL_SIZE * strip_index, gPixelBrightness + STRIP_LEN * strip_index, STRIP_LEN);
 }
 
 void WS2812_updateLEDs(void)
@@ -215,7 +215,7 @@ static void WS2812_colorToBitArray(uint8_t color_val, uint16_t* byte_array)
  * the LED that is the furthest away from the controller (the point where
  * data is injected into the chain)
  */
-void WS2812_send(const uint8_t* pixels, const uint16_t _len)
+void WS2812_send(const uint8_t* pixels, const uint8_t* pixel_brightness, const uint16_t _len)
 {
 	uint8_t led;
 	uint16_t buffersize;
@@ -228,9 +228,9 @@ void WS2812_send(const uint8_t* pixels, const uint16_t _len)
 	// correct pulse widths according to color values
 	while (len)
 	{
-		WS2812_colorToBitArray(apply_brightness(pixels[led * PIXEL_SIZE + R_OFFSET], gPixelBrightness[led]), &LED_BYTE_Buffer[led * 24]); 	
-		WS2812_colorToBitArray(apply_brightness(pixels[led * PIXEL_SIZE + B_OFFSET], gPixelBrightness[led]), &LED_BYTE_Buffer[led * 24 + 8]); 	
-		WS2812_colorToBitArray(apply_brightness(pixels[led * PIXEL_SIZE + G_OFFSET], gPixelBrightness[led]), &LED_BYTE_Buffer[led * 24 + 16]); 	
+		WS2812_colorToBitArray(apply_brightness(pixels[led * PIXEL_SIZE + G_OFFSET], pixel_brightness[led]), &LED_BYTE_Buffer[led * 24]); 	
+		WS2812_colorToBitArray(apply_brightness(pixels[led * PIXEL_SIZE + R_OFFSET], pixel_brightness[led]), &LED_BYTE_Buffer[led * 24 + 8]); 	
+		WS2812_colorToBitArray(apply_brightness(pixels[led * PIXEL_SIZE + B_OFFSET], pixel_brightness[led]), &LED_BYTE_Buffer[led * 24 + 16]); 	
 		
 		led++;
 		len--;
