@@ -6,6 +6,7 @@
 #include "ws2812b.h"
 #include "usart.h"
 
+
 int height[3];
 int i, j, k;
 float alpha = 0.9;

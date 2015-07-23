@@ -1,7 +1,7 @@
 #include "auto_sampler.h"
 
 //====================================================================================
-//	VARIABLE AND FUNCTION DECLARATIONS
+//	VARIABLE DECLARATIONS
 //====================================================================================
 volatile uint16_t ADCvalue = 0;       // Updated 35000 times per second by DMA
 int newDataAvailable = 0;							// Flag set by ADC ISR when new data available

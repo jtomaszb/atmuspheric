@@ -5,6 +5,7 @@
 #include "stm32f4xx.h"
 
 #define ADC1_RDR 0x4001204C 					// ADC1 Regular Data Register (read only)
+#define SAMPLEFREQUENCY 35000
 
 
 //====================================================================================
