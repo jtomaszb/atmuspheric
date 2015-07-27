@@ -52,6 +52,6 @@ float32_t DFT_Process(void) {
 	AutoSampler_Stop();
 	
 	// return power of kth frequency bin
-	return x_real*x_real + x_imag*x_imag;
+	return (x_real*x_real + x_imag*x_imag) / N;
 	
 }
