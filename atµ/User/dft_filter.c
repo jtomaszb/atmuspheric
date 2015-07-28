@@ -9,31 +9,36 @@
 #define N 256
 #define twoPI 6.28318530718
 
-float32_t cosTable[N];
-float32_t sinTable[N];
-
+float32_t cosTable[3][N];
+float32_t sinTable[3][N];
+float32_t freqs[3] = {50, 500, 5000};
+float32_t dft_outs[3];
 
 //====================================================================================
 //	FUNCTION DEFINITIONS
 //====================================================================================
 void DFT_Init(float32_t targetFreq) {
-	int i;
-
-	//Calculate k-th bin
-	float32_t k_bin = targetFreq / SAMPLEFREQUENCY;
+	int i, j;
+	float32_t k_bin[3];
 	
-	// Fill sin and cos tables
-	for(i = 0; i < N; i++) {
-		cosTable[i] = cos(i*twoPI*k_bin);
-		sinTable[i] = sin(i*twoPI*k_bin);
+	//Calculate k-th bin
+	for (j = 0; j < 3; j++)
+	{
+		k_bin[j] = freqs[j] / SAMPLEFREQUENCY;
+		
+		// Fill sin and cos tables
+		for(i = 0; i < N; i++) {
+			cosTable[j][i] = cos(i*twoPI*k_bin[j]);
+			sinTable[j][i] = sin(i*twoPI*k_bin[j]);
+		}
 	}
 }
 
-float32_t DFT_Process(void) {
-	float32_t x_real = 0;
-	float32_t x_imag = 0;
+void DFT_Process(void) {
+	float32_t x_real[3] = {0};
+	float32_t x_imag[3] = {0};
 	float32_t input;
-	int i;
+	int i, j;
 	
 	// start sampler and process samples as they come
 	AutoSampler_Start();
@@ -45,13 +50,17 @@ float32_t DFT_Process(void) {
 		input = ((float32_t)AutoSampler_GetReading()-(float32_t)2048.0)/(float32_t)2048.0;
 		
 		// calculate real and imaginary part of bin
-		x_real += input * cosTable[i];
-		x_imag -= input * sinTable[i];
-		
+		for (j = 0; j < 3; j++)
+		{
+			x_real[j] += input * cosTable[j][i];
+			x_imag[j] -= input * sinTable[j][i];
+		}
 	}
 	AutoSampler_Stop();
 	
 	// return power of kth frequency bin
-	return (x_real*x_real + x_imag*x_imag) / N;
-	
+	for (i = 0; i < 3; i++)
+	{
+		dft_outs[i] = (x_real[i]*x_real[i] + x_imag[i]*x_imag[i]);	
+	}
 }

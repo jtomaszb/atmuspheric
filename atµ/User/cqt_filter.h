@@ -13,7 +13,7 @@ extern float32_t cq_out[3];
 // 	hamm:
 //====================================================================================
 
-void CQT_Init(float32_t targetFreq);
+void CQT_Init(void);
 void CQT_Process(void);
 float32_t hamm(int n, int Nk);
 

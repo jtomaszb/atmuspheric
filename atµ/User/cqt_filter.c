@@ -21,9 +21,26 @@ int samplesNeeded;
 //====================================================================================
 //	FUNCTION DEFINITIONS
 //====================================================================================
-void CQT_Init(float32_t targetFreq) {
+void CQT_Init(void) {
 	int i;
+	GPIO_InitTypeDef GPIO_InitDef;
 
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+	 
+	//Pins 13 and 14
+	GPIO_InitDef.GPIO_Pin = GPIO_Pin_15;
+	//Mode output
+	GPIO_InitDef.GPIO_Mode = GPIO_Mode_OUT;
+	//Output type push-pull
+	GPIO_InitDef.GPIO_OType = GPIO_OType_PP;
+	//Without pull resistors
+	GPIO_InitDef.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	//50MHz pin speed
+	GPIO_InitDef.GPIO_Speed = GPIO_Speed_50MHz;
+	 
+	//Initialize pins on GPIOG port
+	GPIO_Init(GPIOD, &GPIO_InitDef);
+	
 	// Calculate N value for each filter
 	for(i = 0; i < NUM_FILTERS; i++) {
 		Nfreq[i] = (int) ceil(Q * SAMPLEFREQUENCY / filterFreq[i]);
@@ -48,6 +65,9 @@ void CQT_Process(void) {
 		// wait until theres a new sample
 		// get new sample and normalize it to -1 to 1
 		while(!AutoSampler_Available()){}
+			
+		GPIO_SetBits(GPIOD, GPIO_Pin_15);
+			
 		input = ((float32_t)AutoSampler_GetReading()-(float32_t)2048.0)/(float32_t)2048.0;
 		
 		// Sum each flter until Nk
@@ -69,6 +89,7 @@ void CQT_Process(void) {
 			cq_imag[2] -= input * hamm(i, Nfreq[2]) * sin(twoPi * i * Q / Nfreq[2]);
 		}
 		
+		GPIO_ResetBits(GPIOD, GPIO_Pin_15);
 	}
 	AutoSampler_Stop();
 	

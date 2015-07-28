@@ -5,6 +5,7 @@
 #include "stm32f4xx.h"
 #include "arm_math.h"
 
+extern float32_t dft_outs[3];
 
 //====================================================================================
 //	DFT_Init:
@@ -12,6 +13,6 @@
 //====================================================================================
 
 void DFT_Init(float32_t targetFreq);
-float32_t DFT_Process(void);
+void DFT_Process(void);
 
 #endif
