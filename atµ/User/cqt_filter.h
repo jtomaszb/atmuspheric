@@ -6,6 +6,7 @@
 #include "arm_math.h"
 
 extern float32_t cq_out[3];
+extern int Nfreq[3];
 
 //====================================================================================
 //	CQT_Init:
@@ -15,7 +16,7 @@ extern float32_t cq_out[3];
 
 void CQT_Init(void);
 void CQT_Process(void);
-float32_t hamm(int n, int Nk);
+void pin_init(void);
 
 
 
