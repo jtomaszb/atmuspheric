@@ -13,7 +13,6 @@ int prev_height[3];
 int i, j, k;
 float alpha = 0.9;
 
-
 int main(void) {
 
 	AutoSampler_Init();
@@ -67,9 +66,6 @@ int main(void) {
 				WS2812_setPixelBrightness(0, i, j);
 		}
 			
-		for (i = 0; i < NUM_STRIPS; i++)
-		{
-			WS2812_updateLEDs(i);
-		}			
+		WS2812_updateLEDs();		
 	}
 }

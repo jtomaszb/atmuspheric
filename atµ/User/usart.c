@@ -1,7 +1,7 @@
 #include "usart.h"
 
 #include "stm32f4xx.h"
-//#include "stm32f4xx_usart.h" // under Libraries/STM32F4xx_StdPeriph_Driver/inc and src
+#include "stm32f4xx_usart.h" // under Libraries/STM32F4xx_StdPeriph_Driver/inc and src
 #include <misc.h>			 // I recommend you have a look at these in the ST firmware folder
 #include "tm_stm32f4_swo.h"
 #include <string.h>
