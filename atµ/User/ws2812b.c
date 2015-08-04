@@ -31,16 +31,15 @@ void WS2812_init(void)
 	/* Compute the prescaler value */
 	RCC_ClocksTypeDef clocks;
 	
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 
 	/* GPIOB Configuration: PWM_TIMER Channel 1 as alternate function push-pull */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_TIM3);
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource0, GPIO_AF_TIM3);
 	
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 
@@ -57,7 +56,7 @@ void WS2812_init(void)
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = 0;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OC1Init(PWM_TIMER, &TIM_OCInitStructure);
+	TIM_OC3Init(PWM_TIMER, &TIM_OCInitStructure);
 
 	/***
 	 * Must enable reload for PWM (STMicroelectronicd RM0090 section 18.3.9
@@ -69,7 +68,7 @@ void WS2812_init(void)
 	 * This is part of the fix for the pulse corruption (the runt pulse at
 	 * the start and the extra pulse at the end).
 	 */
-	TIM_OC1PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
+	TIM_OC3PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
 
 	/* configure DMA */
 	/* DMA clock enable */
@@ -91,7 +90,7 @@ void WS2812_init(void)
 
 	DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;							// stop DMA feed after buffer size is reached
 
-	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR1;	// physical address of Timer 3 CCR1
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR3;	// physical address of Timer 3 CCR3
 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
 	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
@@ -113,16 +112,14 @@ void WS2812_updateStrip(uint8_t strip_index)
 		curr_strip = strip_index;
 
 		// UNDO PWM PIN CONFIG FOR ALL PINS
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
 		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-		GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5;
 		GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8;
 		GPIO_Init(GPIOC, &GPIO_InitStructure);
 
 		// SET UP TO CONFIG PIN FOR PWM
@@ -132,22 +129,67 @@ void WS2812_updateStrip(uint8_t strip_index)
 		switch (curr_strip)
 		{
 			case 0:
-				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
 				GPIO_Init(GPIOB, &GPIO_InitStructure);
-				GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_TIM3);
+				GPIO_PinAFConfig(GPIOB, GPIO_PinSource0, GPIO_AF_TIM3);
+				TIM_OC3Init(PWM_TIMER, &TIM_OCInitStructure);
+				TIM_OC3PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
+				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR3;	// physical address of Timer 3 CCR1
 				break;
 
 			case 1:
-				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
-				GPIO_Init(GPIOA, &GPIO_InitStructure);
-				GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_TIM3);
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+				GPIO_Init(GPIOB, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOB, GPIO_PinSource1, GPIO_AF_TIM3);
+				TIM_OC4Init(PWM_TIMER, &TIM_OCInitStructure);
+				TIM_OC4PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
+				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR4;	// physical address of Timer 3 CCR1
 				break;
 
 			case 2:
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+				GPIO_Init(GPIOB, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_TIM3);
+				TIM_OC1Init(PWM_TIMER, &TIM_OCInitStructure);
+				TIM_OC1PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
+				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR1;	// physical address of Timer 3 CCR1
+				break;
+
+			case 3:
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
+				GPIO_Init(GPIOB, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOB, GPIO_PinSource5, GPIO_AF_TIM3);
+				TIM_OC2Init(PWM_TIMER, &TIM_OCInitStructure);
+				TIM_OC2PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
+				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR2;	// physical address of Timer 3 CCR1
+				break;
+			
+			case 4:
 				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
 				GPIO_Init(GPIOC, &GPIO_InitStructure);
 				GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_TIM3);
+				TIM_OC1Init(PWM_TIMER, &TIM_OCInitStructure);
+				TIM_OC1PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
+				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR1;	// physical address of Timer 3 CCR1
 				break;
+
+			case 5:
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
+				GPIO_Init(GPIOC, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_TIM3);
+				TIM_OC2Init(PWM_TIMER, &TIM_OCInitStructure);
+				TIM_OC2PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
+				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR2;	// physical address of Timer 3 CCR1
+				break;
+
+			case 6:
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
+				GPIO_Init(GPIOC, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOC, GPIO_PinSource8, GPIO_AF_TIM3);
+				TIM_OC3Init(PWM_TIMER, &TIM_OCInitStructure);
+				TIM_OC3PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
+				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR3;	// physical address of Timer 3 CCR1
+				break;			
 			
 			default:
 				break;
@@ -157,6 +199,8 @@ void WS2812_updateStrip(uint8_t strip_index)
 	{
 		return;
 	}
+
+	DMA_Init(DMA_STREAM, &DMA_InitStructure);
 	
 	WS2812_send(gPixels + STRIP_LEN * PIXEL_SIZE * strip_index, gPixelBrightness + STRIP_LEN * strip_index, STRIP_LEN);
 }

@@ -4,7 +4,7 @@
 #define _WS2812B_H_
 
 #define STRIP_LEN 	11
-#define NUM_STRIPS 	3
+#define NUM_STRIPS 	7
 
 // Use update signal
 // PAP: This is better than the CC1 signal; using the CC1 signal causes the timing to shift
