@@ -5,8 +5,8 @@
 #include "stm32f4xx.h"
 #include "arm_math.h"
 
-extern float32_t cq_out[3];
-extern int Nfreq[3];
+extern float32_t cq_out[5];
+extern int Nfreq[5];
 
 //====================================================================================
 //	CQT_Init:

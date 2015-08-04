@@ -6,10 +6,11 @@
 #include "ws2812b.h"
 #include "usart.h"
 #include "dft_filter.h"
+#include "cqt_filter.h"
 
 
-int height[3];
-int prev_height[3];
+int height[5];
+int prev_height[5];
 int i, j, k;
 float alpha = 0.9;
 
@@ -19,28 +20,32 @@ int main(void) {
 	init_USART1(9600);
 	WS2812_init();
 	
-	DFT_Init(50);
+	CQT_Init();
 	for(j = 0; j < 11; j++)
 		WS2812_setPixelColor(100, 10, 10, 0, j);
 	for(j = 0; j < 11; j++)
 		WS2812_setPixelColor(100, 10, 10, 1, j);
 	for(j = 0; j < 11; j++)
 		WS2812_setPixelColor(100, 10, 10, 2, j);
+	for(j = 0; j < 11; j++)
+		WS2812_setPixelColor(100, 10, 10, 3, j);
+	for(j = 0; j < 11; j++)
+		WS2812_setPixelColor(100, 10, 10, 4, j);	
 	
 	while (1)
 	{
 		int i, temp;
 
-		DFT_Process();
+		CQT_Process();
 
-		for (i = 0; i < 3; i++)
+		for (i = 0; i < 5; i++)
 		{
 			prev_height[i] = height[i];
-			
-			if (dft_outs[i] < prev_height[i])
+		
+			if (cq_out[i] < prev_height[i])
 				height[i] = prev_height[i] - 1;
 			else
-				height[i] = dft_outs[i];
+				height[i] = cq_out[i];
 		}
 	
 		// max height 64 so cast to int and right shift
@@ -52,7 +57,7 @@ int main(void) {
 //		height[1] = (uint32_t)(alpha * height[1]) + ((1 - alpha) * Output[8]);
 //		height[2] = (uint32_t)(alpha * height[2]) + ((1 - alpha) * Output[38]);
 		
-		for(i = 0; i < 3; i++)
+		for(i = 0; i < 5; i++)
 		{
 			if(height[i] > 11)
 				height[i] = 11;
