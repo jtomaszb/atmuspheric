@@ -8,30 +8,34 @@
 
 #define twoPi 			6.28318530718
 #define Q  					2
-#define NUM_FILTERS 5
+#define NUM_FILTERS 7
 
 #define FREQ0				168
 #define FREQ1				353
 #define FREQ2				741
 #define FREQ3				1556
 #define FREQ4				3267
+#define FREQ5				6861
+#define FREQ6				14408
 
 #define FREQ0_N			(Q * SAMPLEFREQUENCY / FREQ0)
 #define FREQ1_N			(Q * SAMPLEFREQUENCY / FREQ1)
 #define FREQ2_N			(Q * SAMPLEFREQUENCY / FREQ2)
 #define FREQ3_N			(Q * SAMPLEFREQUENCY / FREQ3)
 #define FREQ4_N			(Q * SAMPLEFREQUENCY / FREQ4)
+#define FREQ5_N			(Q * SAMPLEFREQUENCY / FREQ5)
+#define FREQ6_N			(Q * SAMPLEFREQUENCY / FREQ6)
 
 // Utility arrays with precalculated filter frequencies and corresponding sample size
-int filterFreq[5] = {FREQ0, FREQ1, FREQ2, FREQ3, FREQ4};
-int Nfreq[5] = {FREQ0_N, FREQ1_N, FREQ2_N, FREQ3_N, FREQ4_N};
+int filterFreq[7] = {FREQ0, FREQ1, FREQ2, FREQ3, FREQ4, FREQ5, FREQ6};
+int Nfreq[7] = {FREQ0_N, FREQ1_N, FREQ2_N, FREQ3_N, FREQ4_N, FREQ5_N, FREQ6_N};
 
 // The lowest frequency needs the largets number of samples
 int samplesNeeded = FREQ0_N;
 
 // Intermediate value holders
-float32_t cq_real[5];
-float32_t cq_imag[5];
+float32_t cq_real[7];
+float32_t cq_imag[7];
 
 // Sine/Cosine and hamming tables
 // Table length depends on frequency
@@ -40,14 +44,18 @@ float32_t cosSinTableF1[2][FREQ1_N];			//Index 0 for cos, 1 for sin
 float32_t cosSinTableF2[2][FREQ2_N];			//Index 0 for cos, 1 for sin
 float32_t cosSinTableF3[2][FREQ3_N];			//Index 0 for cos, 1 for sin
 float32_t cosSinTableF4[2][FREQ4_N];			//Index 0 for cos, 1 for sin
+float32_t cosSinTableF5[2][FREQ5_N];			//Index 0 for cos, 1 for sin
+float32_t cosSinTableF6[2][FREQ6_N];			//Index 0 for cos, 1 for sin
 float32_t hammTableF0[FREQ0_N];
 float32_t hammTableF1[FREQ1_N];
 float32_t hammTableF2[FREQ2_N];
 float32_t hammTableF3[FREQ3_N];
 float32_t hammTableF4[FREQ4_N];
+float32_t hammTableF5[FREQ5_N];
+float32_t hammTableF6[FREQ6_N];
 
 // Output variable that holds bin power of selected frequencies
-float32_t cq_out[5];
+float32_t cq_out[7];
 
 
 //====================================================================================
@@ -94,15 +102,29 @@ void CQT_Init(void) {
 		hammTableF4[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[4]);
 			
 	}
+	for(i = 0; i < Nfreq[5]; i++) {
+		cosSinTableF5[0][i] = cos(twoPi * i * Q / Nfreq[5]);
+		cosSinTableF5[1][i] = sin(twoPi * i * Q / Nfreq[5]);
+			
+		hammTableF5[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[5]);
+			
+	}
+	for(i = 0; i < Nfreq[6]; i++) {
+		cosSinTableF6[0][i] = cos(twoPi * i * Q / Nfreq[6]);
+		cosSinTableF6[1][i] = sin(twoPi * i * Q / Nfreq[6]);
+			
+		hammTableF6[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[6]);
+			
+	}
 
 }
 
 void CQT_Process(void) {
-	float32_t input, input0, input1, input2, input3, input4;
+	float32_t input, input0, input1, input2, input3, input4, input5, input6;
 	int i;
 	
 	// zero out output buffer from prev iteration
-	for(i = 0; i < 5; i++) {
+	for(i = 0; i < 7; i++) {
 		cq_real[i] = 0;
 		cq_imag[i] = 0;
 	}
@@ -156,6 +178,21 @@ void CQT_Process(void) {
 			cq_real[4] += input4 * cosSinTableF4[0][i];
 			cq_imag[4] -= input4 * cosSinTableF4[1][i];
 		}		
+		
+		// 600 Hz
+		if(i < Nfreq[5]) {
+			input5 = 19*input * hammTableF5[i];
+			cq_real[5] += input5 * cosSinTableF5[0][i];
+			cq_imag[5] -= input5 * cosSinTableF5[1][i];
+		}
+
+		// 1800 Hz
+		if(i < Nfreq[6]) {
+			input6 = 25*input * hammTableF6[i];
+			cq_real[6] += input6 * cosSinTableF6[0][i];
+			cq_imag[6] -= input6 * cosSinTableF6[1][i];
+		}		
+		
 		GPIO_ResetBits(GPIOD, GPIO_Pin_15);
 	}
 	AutoSampler_Stop();
@@ -167,7 +204,7 @@ void CQT_Process(void) {
 //	}
 	
 	// update output with bin power
-	for(i = 0; i < 5; i++)
+	for(i = 0; i < 7; i++)
 		cq_out[i] = (cq_real[i]*cq_real[i] + cq_imag[i]*cq_imag[i])/(Nfreq[i]);
 
 }

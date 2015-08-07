@@ -9,8 +9,8 @@
 #include "cqt_filter.h"
 
 
-int height[5];
-int prev_height[5];
+int height[7];
+int prev_height[7];
 int i, j, k;
 float alpha = 0.9;
 
@@ -31,6 +31,10 @@ int main(void) {
 		WS2812_setPixelColor(100, 10, 10, 3, j);
 	for(j = 0; j < 11; j++)
 		WS2812_setPixelColor(100, 10, 10, 4, j);	
+	for(j = 0; j < 11; j++)
+		WS2812_setPixelColor(100, 10, 10, 5, j);
+	for(j = 0; j < 11; j++)
+		WS2812_setPixelColor(100, 10, 10, 6, j);	
 	
 	while (1)
 	{
@@ -38,7 +42,7 @@ int main(void) {
 
 		CQT_Process();
 
-		for (i = 0; i < 5; i++)
+		for (i = 0; i < 7; i++)
 		{
 			prev_height[i] = height[i];
 		
@@ -57,7 +61,7 @@ int main(void) {
 //		height[1] = (uint32_t)(alpha * height[1]) + ((1 - alpha) * Output[8]);
 //		height[2] = (uint32_t)(alpha * height[2]) + ((1 - alpha) * Output[38]);
 		
-		for(i = 0; i < 5; i++)
+		for(i = 0; i < 7; i++)
 		{
 			if(height[i] > 11)
 				height[i] = 11;
