@@ -18,6 +18,8 @@ int prev_height[7];
 int i, j, k, l, m;
 float alpha = 0.9;
 
+void mapToHeight(float32_t* output, float32_t* maxima, uint8_t* height);
+
 int main(void) {
 
 	// Initilize modules
@@ -46,13 +48,15 @@ int main(void) {
 		for (i = 0; i < 7; i++)
 		{
 			prev_height[i] = height[i];
-		
-			if (cq_out[i] < prev_height[i])
-				height[i] = prev_height[i] - 1;
-			else
-				height[i] = cq_out[i];
 		}
+	
+		mapToHeight(cq_out, cq_max, height);
 		
+		for (i = 0; i < 7; i++)
+		{
+			if (height[i] < prev_height[i])
+				height[i] = prev_height[i] - 1;
+		}
 		for(i = 0; i < 7; i++)
 		{
 			if(height[i] > 11)
@@ -100,4 +104,13 @@ void sg_delay(int count) {
 	for(m = 0; m < count; m++)
 	{}
 	
+}
+
+void mapToHeight(float32_t* output, float32_t* maxima, uint8_t* height)
+{
+	int i;
+	for (i = 0; i < NUM_STRIPS; i++)
+	{
+		height[i] = (uint8_t) ((output[i] / maxima[i]) * STRIP_LEN * LEVELS_PER_PIXEL);
+	}
 }

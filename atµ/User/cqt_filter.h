@@ -6,6 +6,7 @@
 #include "arm_math.h"
 
 extern float32_t cq_out[7];
+extern float32_t cq_max[7];
 extern int Nfreq[7];
 
 //====================================================================================
