@@ -8,33 +8,34 @@
 #include "dft_filter.h"
 #include "cqt_filter.h"
 
+// utility functions
+void startupSequence();
+void sg_delay(int count);
+
 
 int height[7];
 int prev_height[7];
-int i, j, k;
+int i, j, k, l, m;
 float alpha = 0.9;
 
 int main(void) {
 
+	// Initilize modules
 	AutoSampler_Init();
 	init_USART1(9600);
 	WS2812_init();
-	
 	CQT_Init();
-	for(j = 0; j < 11; j++)
-		WS2812_setPixelColor(100, 10, 10, 0, j);
-	for(j = 0; j < 11; j++)
-		WS2812_setPixelColor(100, 10, 10, 1, j);
-	for(j = 0; j < 11; j++)
-		WS2812_setPixelColor(100, 10, 10, 2, j);
-	for(j = 0; j < 11; j++)
-		WS2812_setPixelColor(100, 10, 10, 3, j);
-	for(j = 0; j < 11; j++)
-		WS2812_setPixelColor(100, 10, 10, 4, j);	
-	for(j = 0; j < 11; j++)
-		WS2812_setPixelColor(100, 10, 10, 5, j);
-	for(j = 0; j < 11; j++)
-		WS2812_setPixelColor(100, 10, 10, 6, j);	
+	
+	// Run statup sequence a few times
+	startupSequence();
+	startupSequence();
+	
+	// Set initial color on tubes
+	for(k = 0; k < 7; k++) {
+		for(j = 0; j < 11; j++) 
+			WS2812_setPixelColor(100, 10, 10, k, j);
+	}
+
 	
 	while (1)
 	{
@@ -51,15 +52,6 @@ int main(void) {
 			else
 				height[i] = cq_out[i];
 		}
-	
-		// max height 64 so cast to int and right shift
-//		height[0] = 10 * cq_out[0];
-//		height[1] = 10 * cq_out[1];//(uint32_t)(power[1]);
-//		height[2] = 10 * cq_out[2];//(uint32_t)(power[2]);
-
-//		height[0] = (uint32_t)(alpha * height[0]) + ((1 - alpha) * Output[2]);
-//		height[1] = (uint32_t)(alpha * height[1]) + ((1 - alpha) * Output[8]);
-//		height[2] = (uint32_t)(alpha * height[2]) + ((1 - alpha) * Output[38]);
 		
 		for(i = 0; i < 7; i++)
 		{
@@ -77,4 +69,35 @@ int main(void) {
 			
 		WS2812_updateLEDs();		
 	}
+}
+
+void startup_Sequence() {
+	
+	for(j = 0; j < 11; j++) {
+		WS2812_setPixelColor(100, 10, 10, 0, j);
+		WS2812_updateStrip(0);
+		sg_delay(10000);
+	}
+	
+	for(k = 1; k < 9; k++) {
+		for(j = 0; j < 11; j++) {
+			WS2812_setPixelColor(100, 10, 10, k, j);
+			WS2812_setPixelColor(0, 0, 0, k-1, 10-j);
+			WS2812_updateStrip(k-1);
+			WS2812_updateStrip(k);
+			sg_delay(10000);
+		}
+	}
+	
+	for(j = 0; j < 11; j++) {
+		WS2812_setPixelColor(0, 0, 0, 8, j);
+		WS2812_updateStrip(8);
+		sg_delay(10000);
+	}
+}
+
+void sg_delay(int count) {
+	for(m = 0; m < count; m++)
+	{}
+	
 }
