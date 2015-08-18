@@ -4,6 +4,7 @@
 #define _WS2812B_H_
 
 #define STRIP_LEN 	11
+#define LEVELS_PER_PIXEL 4
 #define NUM_STRIPS 	7
 
 // Use update signal
@@ -44,5 +45,6 @@ void WS2812_send(const uint8_t* pixels, const uint8_t* pixel_brightness, const u
 void WS2812_setPixelColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t strip_num, uint8_t pixel_index);
 void WS2812_setPixelBrightness(uint8_t brightness, uint8_t strip_num, uint8_t pixel_index);
 void WS2812_updateLEDs(void);
+void WS2812_setStripLevel(uint8_t strip_num, uint8_t level);
 
 #endif // _WS2812B_H_

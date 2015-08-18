@@ -299,3 +299,22 @@ void WS2812_send(const uint8_t* pixels, const uint8_t* pixel_brightness, const u
 	DMA_Cmd(DMA_STREAM, DISABLE); 			// disable DMA channel 5
 	DMA_ClearFlag(DMA_STREAM, DMA_TCIF); 				// clear DMA1 Channel 5 transfer complete flag
 }
+
+void WS2812_setStripLevel(uint8_t strip_num, uint8_t level)
+{
+	uint8_t i;
+	uint8_t height = level / LEVELS_PER_PIXEL;
+	uint8_t last_pixel_brightness = (MAX_BRIGHTNESS * (level % LEVELS_PER_PIXEL)) / LEVELS_PER_PIXEL;
+	
+	for (i = 0; i < height + 1; i++)
+	{
+		WS2812_setPixelBrightness(MAX_BRIGHTNESS, strip_num, i);
+	}
+	
+	WS2812_setPixelBrightness(last_pixel_brightness, strip_num, height + 1);
+	
+	for (i = height + 2; i < STRIP_LEN * LEVELS_PER_PIXEL; i++)
+	{
+		WS2812_setPixelBrightness(0, strip_num, i);
+	}
+}

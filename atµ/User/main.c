@@ -9,14 +9,17 @@
 #include "cqt_filter.h"
 
 // utility functions
-void startupSequence();
+void startup_sequence(void);
 void sg_delay(int count);
 
 
-int height[7];
+uint8_t height[7];
 int prev_height[7];
-int i, j, k, l, m;
+uint8_t i, j, k, l, m;
 float alpha = 0.9;
+int direction  = 0;
+int avg_height = 0;
+
 
 void mapToHeight(float32_t* output, float32_t* maxima, uint8_t* height);
 
@@ -29,22 +32,49 @@ int main(void) {
 	CQT_Init();
 	
 	// Run statup sequence a few times
-	startupSequence();
-	startupSequence();
+	startup_sequence();
+	startup_sequence();
 	
 	// Set initial color on tubes
 	for(k = 0; k < 7; k++) {
 		for(j = 0; j < 11; j++) 
 			WS2812_setPixelColor(100, 10, 10, k, j);
 	}
-
+	
+	k = 0;
 	
 	while (1)
 	{
 		int i, temp;
 
 		CQT_Process();
+			
+		// Update counter k that goes from 0 -> 255 -> 0 -> 255 and so on
+		if (direction == 0)
+		{
+			if (k == 255)
+				direction = 1;
+			else
+				k++;
+		}
+		else
+		{
+			if (k == 0)
+				direction  = 0;
+			else
+				k--;
+		}
+		
+		// Use counter to fade between blue and red, with green gradient along strips
+		for (i = 0; i < 7; i++)
+		{
+			for (l = 0; l < STRIP_LEN; l++)
+			{
+					WS2812_setPixelColor(255 - k, l * 12, k - 255, i, l);	
+			}				
+		}
 
+		
 		for (i = 0; i < 7; i++)
 		{
 			prev_height[i] = height[i];
@@ -57,25 +87,31 @@ int main(void) {
 			if (height[i] < prev_height[i])
 				height[i] = prev_height[i] - 1;
 		}
+
 		for(i = 0; i < 7; i++)
 		{
-			if(height[i] > 11)
-				height[i] = 11;
-
-			// turn on pixels to height
-			for(j = 0; j < height[i]; j++)
-				WS2812_setPixelBrightness(MAX_BRIGHTNESS, i, j);
+			if(height[i] > STRIP_LEN * LEVELS_PER_PIXEL)
+				height[i] = STRIP_LEN * LEVELS_PER_PIXEL;
 			
-			// turn off pixels past height
-			for(j = height[i]; j < 11; j++)
-				WS2812_setPixelBrightness(0, i, j);
+			WS2812_setStripLevel(i, height[i]);
 		}
+		
+		// compute average height among tubes for fun lighting stuff
+		avg_height = 0;
+		
+		for (i = 0; i < 7; i++)
+		{
+			avg_height += height[i];
+		}
+		avg_height /= 7;
+		
+		j = avg_height;
 			
 		WS2812_updateLEDs();		
 	}
 }
 
-void startup_Sequence() {
+void startup_sequence() {
 	
 	for(j = 0; j < 11; j++) {
 		WS2812_setPixelColor(100, 10, 10, 0, j);
