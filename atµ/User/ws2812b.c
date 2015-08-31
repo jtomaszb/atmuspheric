@@ -25,12 +25,14 @@ uint8_t gPixels[NUM_STRIPS * STRIP_LEN * PIXEL_SIZE];
 uint8_t gPixelBrightness[NUM_STRIPS * STRIP_LEN];
 
 uint8_t curr_strip = 0;
+uint8_t dma_ready = 1;
 
 void WS2812_init(void)
 {
 	/* Compute the prescaler value */
 	RCC_ClocksTypeDef clocks;
 	
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 
@@ -119,8 +121,12 @@ void WS2812_updateStrip(uint8_t strip_index)
 		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5;
 		GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8;
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;// | GPIO_Pin_7 | GPIO_Pin_8;
 		GPIO_Init(GPIOC, &GPIO_InitStructure);
+
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;// | GPIO_Pin_8;
+		GPIO_Init(GPIOA, &GPIO_InitStructure);
+
 
 		// SET UP TO CONFIG PIN FOR PWM
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
@@ -174,21 +180,21 @@ void WS2812_updateStrip(uint8_t strip_index)
 				break;
 
 			case 5:
-				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
-				GPIO_Init(GPIOC, &GPIO_InitStructure);
-				GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_TIM3);
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+				GPIO_Init(GPIOA, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_TIM3);
 				TIM_OC2Init(PWM_TIMER, &TIM_OCInitStructure);
 				TIM_OC2PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
-				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR2;	// physical address of Timer 3 CCR1
+				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR1;	// physical address of Timer 3 CCR1
 				break;
 
 			case 6:
-				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
-				GPIO_Init(GPIOC, &GPIO_InitStructure);
-				GPIO_PinAFConfig(GPIOC, GPIO_PinSource8, GPIO_AF_TIM3);
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
+				GPIO_Init(GPIOA, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_TIM3);
 				TIM_OC3Init(PWM_TIMER, &TIM_OCInitStructure);
 				TIM_OC3PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
-				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR3;	// physical address of Timer 3 CCR1
+				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR2;	// physical address of Timer 3 CCR1
 				break;			
 			
 			default:
