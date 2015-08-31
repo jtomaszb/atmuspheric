@@ -8,7 +8,8 @@
 #include "cqt_filter.h"
 
 // utility functions
-void startup_sequence(void);
+void startup1(void);
+void startup2(void);
 void sg_delay(int count);
 
 uint8_t height[7];
@@ -29,9 +30,18 @@ int main(void) {
 	WS2812_init();
 	CQT_Init();
 	
-	// Run statup sequence a few times
-	startup_sequence();
-	startup_sequence();
+	// Run statup sequence
+	startup1();
+	
+	// clear pixels
+	for(k = 0; k < 7; k++) {
+		for(j = 0; j < 11; j++) 
+			WS2812_setPixelColor(0, 0, 0, k, j);
+	}
+	WS2812_updateLEDs();
+	
+	// run second startup
+	startup2();
 	
 	// Set initial color on tubes
 	for(k = 0; k < 7; k++) {
@@ -43,7 +53,7 @@ int main(void) {
 	
 	while (1)
 	{
-		int i, temp;
+		int i;
 
 		CQT_Process();
 			
@@ -85,6 +95,16 @@ int main(void) {
 			if (height[i] < prev_height[i])
 				height[i] = prev_height[i] - 1;
 		}
+		
+		//====== FUN COLOR STUFF ===========//
+		// Use height to set strip whiter as it goes higher
+		for (i = 0; i < 7; i++)
+		{
+			for (l = 0; l < STRIP_LEN; l++)
+			{
+					WS2812_setPixelColor(height[i]*20, height[i]*20, height[i]*20, i, l);	
+			}				
+		}
 
 		for(i = 0; i < NUM_STRIPS; i++)
 		{
@@ -109,7 +129,7 @@ int main(void) {
 	}
 }
 
-void startup_sequence() {
+void startup1() {
 	
 	for(j = 0; j < STRIP_LEN; j++) {
 		WS2812_setPixelColor(100, 10, 10, 0, j);
@@ -132,6 +152,81 @@ void startup_sequence() {
 		WS2812_updateStrip(8);
 		sg_delay(10000);
 	}
+}
+
+void startup2() {
+	
+	// light up first strip
+	for(j = 0; j < 11; j++) {
+		WS2812_setPixelColor(100, 10, 10, 0, j);
+		WS2812_updateStrip(0);
+		sg_delay(10000);
+	}
+	// slow down light up second
+	for(j = 0; j < 8; j++) {
+		WS2812_setPixelColor(100, 10, 10, 1, j);
+		WS2812_updateStrip(1);
+		sg_delay(10000*(j+1)/2);
+	}
+	// flicker next light
+	WS2812_setPixelColor(0, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(100, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(50, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(0, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(100, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(0, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(60, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(100, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(50, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(0, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(100, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(20, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(0, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	WS2812_setPixelColor(100, 10, 10, 1, 8);
+	WS2812_updateStrip(1);
+	sg_delay(1000);
+	// big delay, make it look like stuck
+	sg_delay(100000);
+	// quickly light up the rest, gottem
+	for(j = 9; j < 11; j++) {
+		WS2812_setPixelColor(100, 10, 10, 1, j);
+		WS2812_updateStrip(1);
+		sg_delay(10000);
+	}
+	for(k = 2; k < 9; k++) {
+		for(j = 0; j < 11; j++) {
+			WS2812_setPixelColor(100, 10, 10, k, j);
+			WS2812_updateStrip(k);
+			sg_delay(10000/4);
+		}
+	}
+	
 }
 
 void sg_delay(int count) {
