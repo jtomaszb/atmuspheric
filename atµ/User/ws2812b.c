@@ -121,10 +121,10 @@ void WS2812_updateStrip(uint8_t strip_index)
 		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5;
 		GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;// | GPIO_Pin_7 | GPIO_Pin_8;
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8;
 		GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;// | GPIO_Pin_8;
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
 		GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 
@@ -195,6 +195,24 @@ void WS2812_updateStrip(uint8_t strip_index)
 				TIM_OC3Init(PWM_TIMER, &TIM_OCInitStructure);
 				TIM_OC3PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
 				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR2;	// physical address of Timer 3 CCR1
+				break;			
+			
+			case 7:
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
+				GPIO_Init(GPIOC, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_TIM3);
+				TIM_OC3Init(PWM_TIMER, &TIM_OCInitStructure);
+				TIM_OC3PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
+				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR2;	// physical address of Timer 3 CCR1
+				break;							
+			
+			case 8:
+				GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
+				GPIO_Init(GPIOC, &GPIO_InitStructure);
+				GPIO_PinAFConfig(GPIOC, GPIO_PinSource8, GPIO_AF_TIM3);
+				TIM_OC3Init(PWM_TIMER, &TIM_OCInitStructure);
+				TIM_OC3PreloadConfig(PWM_TIMER, TIM_OCPreload_Enable);
+				DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&PWM_TIMER->CCR3;	// physical address of Timer 3 CCR1
 				break;			
 			
 			default:

@@ -5,7 +5,7 @@
 
 #define STRIP_LEN 	24
 #define LEVELS_PER_PIXEL 2
-#define NUM_STRIPS 	7
+#define NUM_STRIPS 	9
 
 // Use update signal
 // PAP: This is better than the CC1 signal; using the CC1 signal causes the timing to shift
