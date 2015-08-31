@@ -7,9 +7,9 @@
 #include <string.h>
 #include "ws2812b.h"
 
-#define MAX_STRLEN 99 // this is the maximum string length of our string in characters
+#define MAX_STRLEN (STRIP_LEN * NUM_STRIPS *  PIXEL_SIZE) // this is the maximum string length of our string in characters
 volatile char received_string[MAX_STRLEN]; // this will hold the recieved string
-volatile uint8_t cnt = 0; // this counter is used to determine the string length
+volatile uint16_t cnt = 0; // this counter is used to determine the string length
 
 
 /* This funcion initializes the USART1 peripheral

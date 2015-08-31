@@ -6,17 +6,17 @@
 //	VARIABLE DECLARATIONS
 //====================================================================================
 
-#define twoPi 			6.28318530718
+#define twoPi 			6.28318530718f
 #define Q  					2
 #define NUM_FILTERS 7
 
-#define FREQ0				168
-#define FREQ1				353
-#define FREQ2				741
-#define FREQ3				1556
-#define FREQ4				3267
-#define FREQ5				6861
-#define FREQ6				14408
+#define FREQ0				168  //100
+#define FREQ1				353  //185
+#define FREQ2				741  //342
+#define FREQ3				1556 //633
+#define FREQ4				3267 //1171
+#define FREQ5				6861 //2167
+#define FREQ6				14408//4009
 
 #define FREQ0_N			(Q * SAMPLEFREQUENCY / FREQ0)
 #define FREQ1_N			(Q * SAMPLEFREQUENCY / FREQ1)
@@ -85,52 +85,50 @@ void CQT_Init(void) {
 		cosSinTableF0[0][i] = cos(twoPi * i * Q / Nfreq[0]);
 		cosSinTableF0[1][i] = sin(twoPi * i * Q / Nfreq[0]);
 		
-		hammTableF0[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[0]);
-		
+		hammTableF0[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[0]);	
 	}
+	
 	for(i = 0; i < Nfreq[1]; i++) {
 		cosSinTableF1[0][i] = cos(twoPi * i * Q / Nfreq[1]);
 		cosSinTableF1[1][i] = sin(twoPi * i * Q / Nfreq[1]);
 		
 		hammTableF1[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[1]);
-		
 	}
+	
 	for(i = 0; i < Nfreq[2]; i++) {
 		cosSinTableF2[0][i] = cos(twoPi * i * Q / Nfreq[2]);
 		cosSinTableF2[1][i] = sin(twoPi * i * Q / Nfreq[2]);
 			
-		hammTableF2[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[2]);
-			
+		hammTableF2[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[2]);		
 	}
+	
 	for(i = 0; i < Nfreq[3]; i++) {
 		cosSinTableF3[0][i] = cos(twoPi * i * Q / Nfreq[3]);
 		cosSinTableF3[1][i] = sin(twoPi * i * Q / Nfreq[3]);
 			
-		hammTableF3[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[3]);
-			
+		hammTableF3[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[3]);		
 	}
+	
 	for(i = 0; i < Nfreq[4]; i++) {
 		cosSinTableF4[0][i] = cos(twoPi * i * Q / Nfreq[4]);
 		cosSinTableF4[1][i] = sin(twoPi * i * Q / Nfreq[4]);
 			
-		hammTableF4[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[4]);
-			
+		hammTableF4[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[4]);		
 	}
+	
 	for(i = 0; i < Nfreq[5]; i++) {
 		cosSinTableF5[0][i] = cos(twoPi * i * Q / Nfreq[5]);
 		cosSinTableF5[1][i] = sin(twoPi * i * Q / Nfreq[5]);
 			
-		hammTableF5[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[5]);
-			
+		hammTableF5[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[5]);		
 	}
+	
 	for(i = 0; i < Nfreq[6]; i++) {
 		cosSinTableF6[0][i] = cos(twoPi * i * Q / Nfreq[6]);
 		cosSinTableF6[1][i] = sin(twoPi * i * Q / Nfreq[6]);
 			
-		hammTableF6[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[6]);
-			
+		hammTableF6[i] = 0.54 - 0.46*cos(twoPi * i / Nfreq[6]);	
 	}
-
 }
 
 void CQT_Process(void) {
@@ -155,7 +153,6 @@ void CQT_Process(void) {
 			
 		// get input and go hamm
 		input = ((float32_t)AutoSampler_GetReading()-(float32_t)2048.0)/(float32_t)2048.0;
-		//input *=	hammTableF0[i];
 		
 		// Sum each flter until Nfreq, or the samples needed for the filter
 		// 200 Hz
@@ -175,66 +172,46 @@ void CQT_Process(void) {
 		input2 = 7.0f * input * hammTableF2[i % Nfreq[2]];
 		cq_real[2] += input2 * cosSinTableF2[0][i % Nfreq[2]];
 		cq_imag[2] -= input2 * cosSinTableF2[1][i % Nfreq[2]];
-
 		updateAvg(2, i);
 
 		// 600 Hz
 		input3 = 18.0f * input * hammTableF3[i % Nfreq[3]];
 		cq_real[3] += input3 * cosSinTableF3[0][i % Nfreq[3]];
 		cq_imag[3] -= input3 * cosSinTableF3[1][i % Nfreq[3]];
-
 		updateAvg(3, i);
 
 		// 1800 Hz
-		//if(i < Nfreq[4]) {
-			input4 = 50.0f*input * hammTableF4[i % Nfreq[4]];
-			cq_real[4] += input4 * cosSinTableF4[0][i % Nfreq[4]];
-			cq_imag[4] -= input4 * cosSinTableF4[1][i % Nfreq[4]];
-	//	}		
-
+		input4 = 50.0f*input * hammTableF4[i % Nfreq[4]];
+		cq_real[4] += input4 * cosSinTableF4[0][i % Nfreq[4]];
+		cq_imag[4] -= input4 * cosSinTableF4[1][i % Nfreq[4]];
 		updateAvg(4, i);
 		
 		// 600 Hz
-		//if(i < Nfreq[5]) {
-			input5 = 60.0f*input * hammTableF5[i % Nfreq[5]];
-			cq_real[5] += input5 * cosSinTableF5[0][i % Nfreq[5]];
-			cq_imag[5] -= input5 * cosSinTableF5[1][i % Nfreq[5]];
-		//}
-
+		input5 = 60.0f*input * hammTableF5[i % Nfreq[5]];
+		cq_real[5] += input5 * cosSinTableF5[0][i % Nfreq[5]];
+		cq_imag[5] -= input5 * cosSinTableF5[1][i % Nfreq[5]];
 		updateAvg(5, i);
 				
 
 		// 1800 Hz
-		//if(i < Nfreq[6]) {
-			input6 = input * hammTableF6[i % Nfreq[6]];
-			cq_real[6] += input6 * cosSinTableF6[0][i % Nfreq[6]];
-			cq_imag[6] -= input6 * cosSinTableF6[1][i % Nfreq[6]];
-		//}
-
+		input6 = input * hammTableF6[i % Nfreq[6]];
+		cq_real[6] += input6 * cosSinTableF6[0][i % Nfreq[6]];
+		cq_imag[6] -= input6 * cosSinTableF6[1][i % Nfreq[6]];
 		updateAvg(6, i);
 		
 		GPIO_ResetBits(GPIOD, GPIO_Pin_15);
 	}
 	AutoSampler_Stop();
 	
-	// divide real and imaginary by Nfreq, or the samples needed for the filter
-//	for(i = 0; i < 3; i++) {
-//		cq_real[i] /= Nfreq[i];
-//		cq_imag[i] /= Nfreq[i];
-//	}
-	
-	// update output with bin power
-//	for(i = 0; i < 7; i++)
-		cq_raw[0] = (cq_real[0]*cq_real[0] + cq_imag[0]*cq_imag[0])/(Nfreq[0]);
-	
-	
-		for (i = 0; i < 7; i++)
-		{
-			cq_out_last[i] = cq_out[i];
-			cq_out[i] = CQ_ALPHA * cq_out_last[i] + (1.0f - CQ_ALPHA) * cq_raw[i];
-		}
-	
-		updateMaxima();
+	cq_raw[0] = (cq_real[0]*cq_real[0] + cq_imag[0]*cq_imag[0])/(Nfreq[0]);
+
+	for (i = 0; i < 7; i++)
+	{
+		cq_out_last[i] = cq_out[i];
+		cq_out[i] = CQ_ALPHA * cq_out_last[i] + (1.0f - CQ_ALPHA) * cq_raw[i];
+	}
+
+	updateMaxima();
 }
 
 void updateMaxima()

@@ -2,7 +2,6 @@
 #include "stm32f4xx.h"
 
 #include "auto_sampler.h"
-//#include "fft_processor.h"
 #include "ws2812b.h"
 #include "usart.h"
 #include "dft_filter.h"
@@ -11,7 +10,6 @@
 // utility functions
 void startup_sequence(void);
 void sg_delay(int count);
-
 
 uint8_t height[7];
 int prev_height[7];
@@ -37,7 +35,7 @@ int main(void) {
 	
 	// Set initial color on tubes
 	for(k = 0; k < 7; k++) {
-		for(j = 0; j < 11; j++) 
+		for(j = 0; j < STRIP_LEN; j++) 
 			WS2812_setPixelColor(100, 10, 10, k, j);
 	}
 	
@@ -52,43 +50,43 @@ int main(void) {
 		// Update counter k that goes from 0 -> 255 -> 0 -> 255 and so on
 		if (direction == 0)
 		{
-			if (k == 255)
+			if (k == (UINT8_MAX - 1))
 				direction = 1;
 			else
 				k++;
 		}
 		else
 		{
-			if (k == 0)
+			if (k == 1)
 				direction  = 0;
 			else
 				k--;
 		}
 		
 		// Use counter to fade between blue and red, with green gradient along strips
-		for (i = 0; i < 7; i++)
+		for (i = 0; i < NUM_STRIPS; i++)
 		{
 			for (l = 0; l < STRIP_LEN; l++)
 			{
-					WS2812_setPixelColor(255 - k, l * 12, k - 255, i, l);	
+					WS2812_setPixelColor(UINT8_MAX - k, l * 10, k - UINT8_MAX, i, l);	
 			}				
 		}
 
 		
-		for (i = 0; i < 7; i++)
+		for (i = 0; i < NUM_STRIPS; i++)
 		{
 			prev_height[i] = height[i];
 		}
 	
 		mapToHeight(cq_out, cq_max, height);
 		
-		for (i = 0; i < 7; i++)
+		for (i = 0; i < NUM_STRIPS; i++)
 		{
 			if (height[i] < prev_height[i])
 				height[i] = prev_height[i] - 1;
 		}
 
-		for(i = 0; i < 7; i++)
+		for(i = 0; i < NUM_STRIPS; i++)
 		{
 			if(height[i] > STRIP_LEN * LEVELS_PER_PIXEL)
 				height[i] = STRIP_LEN * LEVELS_PER_PIXEL;
@@ -99,11 +97,11 @@ int main(void) {
 		// compute average height among tubes for fun lighting stuff
 		avg_height = 0;
 		
-		for (i = 0; i < 7; i++)
+		for (i = 0; i < NUM_STRIPS; i++)
 		{
 			avg_height += height[i];
 		}
-		avg_height /= 7;
+		avg_height /= NUM_STRIPS;
 		
 		j = avg_height;
 			
@@ -113,14 +111,14 @@ int main(void) {
 
 void startup_sequence() {
 	
-	for(j = 0; j < 11; j++) {
+	for(j = 0; j < STRIP_LEN; j++) {
 		WS2812_setPixelColor(100, 10, 10, 0, j);
 		WS2812_updateStrip(0);
 		sg_delay(10000);
 	}
 	
 	for(k = 1; k < 9; k++) {
-		for(j = 0; j < 11; j++) {
+		for(j = 0; j < STRIP_LEN; j++) {
 			WS2812_setPixelColor(100, 10, 10, k, j);
 			WS2812_setPixelColor(0, 0, 0, k-1, 10-j);
 			WS2812_updateStrip(k-1);
@@ -129,7 +127,7 @@ void startup_sequence() {
 		}
 	}
 	
-	for(j = 0; j < 11; j++) {
+	for(j = 0; j < NUM_STRIPS; j++) {
 		WS2812_setPixelColor(0, 0, 0, 8, j);
 		WS2812_updateStrip(8);
 		sg_delay(10000);
