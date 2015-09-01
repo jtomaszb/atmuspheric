@@ -123,7 +123,7 @@ void CQT_Process(void) {
 			cq_imag[0] -= input * cosSinHammTable[0][1][i];
 		}
 		
-		for(j = 0; j < 9; j++) {
+		for(j = 1; j < 9; j++) {
 			cq_real[j] += input * cosSinHammTable[j][0][i % Nfreq[j]];
 			cq_imag[j] -= input * cosSinHammTable[j][1][i % Nfreq[j]];		
 			updateAvg(j, i);
