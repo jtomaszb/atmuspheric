@@ -17,6 +17,7 @@ extern int Nfreq[9];
 
 void CQT_Init(void);
 void CQT_Process(void);
+void CQT_Process2(void);
 void pin_init(void);
 
 

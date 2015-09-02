@@ -72,6 +72,7 @@ float32_t **cosSinHammTable[NUM_FILTERS] = {(float**)cosSinHammF0, (float**)cosS
 																						(float**)cosSinHammF6, (float**)cosSinHammF7, 
 																						(float**)cosSinHammF8 };
 
+																						
 // Output variable that holds bin power of selected frequencies
 float32_t cq_out[NUM_FILTERS];
 float32_t cq_max[NUM_FILTERS];
@@ -79,6 +80,13 @@ float32_t cq_raw[NUM_FILTERS];
 float32_t cq_out_last[NUM_FILTERS];
 
 float32_t maxima_window[NUM_FILTERS][MAXIMA_WINDOW_SIZE];
+
+float32_t cq_intermediate[9];														
+
+int filterNCounter[9] = {0};
+int numTimesAveraged[9] = {0};
+int numTimesToAverage[9] = {1, 1, 1, 1, 1, 1, 2, 4, 7};
+
 void updateMaxima(void);
 void updateAvg(int freq, int sample_num);
 
@@ -96,6 +104,74 @@ void CQT_Init(void) {
 			cosSinHammTable[j][0][i] = (0.54 - 0.46*cos(twoPi * i / Nfreq[j])) * cos(twoPi * i * Q / Nfreq[j]);
 			cosSinHammTable[j][1][i] = (0.54 - 0.46*cos(twoPi * i / Nfreq[j])) * sin(twoPi * i * Q / Nfreq[j]);
 		}
+	}
+}
+
+void CQT_Process2(void) {
+	float32_t input;
+	int i, j;
+	
+	// start sampler and process samples as they come
+	AutoSampler_Start();
+	while(1) {
+		// wait until theres a new sample
+		// get new sample and normalize it to -1 to 1
+		while(!AutoSampler_Available()){}
+
+		// get input and normalize to (-1 , 1)
+		input = ((float32_t)AutoSampler_GetReading()-(float32_t)2048.0)/(float32_t)2048.0;
+		
+		// DFT Summation
+		for(i = 0; i < 9; i++) {
+			cq_real[i] += input * cosSinHammTable[i][0][filterNCounter[i]];
+			cq_imag[i] -= input * cosSinHammTable[i][1][filterNCounter[i]];
+			
+			// increment filter counter
+			filterNCounter[i]++;
+		}
+		
+		// Check if any of the counters have reached corresponding Nfreq
+		// If so, do math for cq_out, zero out cq arrays, and reset counter
+		for(i = 0; i < 9; i++) {
+			if(filterNCounter[i] == Nfreq[i]) {
+				
+				cq_intermediate[i] += (cq_real[i] * cq_real[i] + cq_imag[i] * cq_imag[i]) / (Nfreq[i]);
+				numTimesAveraged[i]++;
+				
+				// if we have averaged cq the number of required times, release it to cq_out
+				if(numTimesAveraged[i] == numTimesToAverage[i]) {
+					
+					// TO DO: Add some math to scale, alpha-filter, and/or average this
+					cq_out[i] = cq_intermediate[i]/numTimesAveraged[i];
+					cq_intermediate[i] = 0;
+					
+					
+					// TO DO
+					// TRIGGER INTERRUPT TO START WRITING TO LEDS.
+					// NEED METHOD FOR QUEUING WRITES USING MULTIPLE DMA/TIMERS
+					// BECAUSE FILTER OUTPUTS CAN BECOME READY WHEN ANOTHER ONE IS
+					// USING SINGLE DMA/TIMER
+					//
+					// F0 averaged once: takes 20 ms
+					// F1 averaged once: takes 11 ms
+					// F2 avearged once: takes 6 ms
+					// F3 averaged once: takes 3.3 ms
+					// F4 averaged once: takes 1.8 ms
+					// F5 averaged once: takes 1 ms
+					// F6 averaged twice: takes 1.086 ms
+					// F7 averaged 4 times: takes 1.114 ms
+					// F8 averaged 7 times: takes 1.001 ms
+				}
+				
+				
+				// zero out DFT arrays and reset counter
+				cq_real[i] = 0;
+				cq_imag[i] = 0;
+				filterNCounter[i] = 0;
+			}
+
+		}
+
 	}
 }
 
@@ -123,12 +199,13 @@ void CQT_Process(void) {
 		input = ((float32_t)AutoSampler_GetReading()-(float32_t)2048.0)/(float32_t)2048.0;
 		
 		// Sum each flter until Nfreq, or the samples needed for the filter
-//		if(i < Nfreq[0]) {
-//			cq_real[0] += input * cosSinHammTable[0][0][i];
-//			cq_imag[0] -= input * cosSinHammTable[0][1][i];
-//		}
+		// cosSinHammTable [filter number] [cos table or sin table] [ table index]
+		if(i < Nfreq[0]) {
+			cq_real[0] += input * cosSinHammTable[0][0][i];
+			cq_imag[0] -= input * cosSinHammTable[0][1][i];
+		}
 		
-		for(j = 0; j < NUM_FILTERS; j++) {
+		for(j = 1; j < NUM_FILTERS; j++) {
 			cq_real[j] += input * cosSinHammTable[j][0][i % Nfreq[j]];
 			cq_imag[j] -= input * cosSinHammTable[j][1][i % Nfreq[j]];		
 			updateAvg(j, i);
