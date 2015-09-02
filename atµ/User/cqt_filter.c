@@ -31,6 +31,9 @@
 #define FREQ8_N			(Q * SAMPLEFREQUENCY / FREQ8)
 
 #define CQ_ALPHA		0.01f
+#define MAXIMA_ALPHA 0.9f
+
+#define MAXIMA_WINDOW_SIZE 256
 
 // Utility arrays with precalculated filter frequencies and corresponding sample size
 int filterFreq[9] = {FREQ0, FREQ1, FREQ2, FREQ3, FREQ4, FREQ5, FREQ6, FREQ7, FREQ8};
@@ -39,14 +42,16 @@ int Nfreq[9] = {FREQ0_N, FREQ1_N, FREQ2_N, FREQ3_N, FREQ4_N, FREQ5_N, FREQ6_N, F
 // The lowest frequency needs the largets number of samples
 int samplesNeeded = FREQ0_N;
 
+int maxima_window_counter = 0;
+
 // Intermediate value holders
-float32_t cq_real[9];
-float32_t cq_imag[9];
+float32_t cq_real[NUM_FILTERS];
+float32_t cq_imag[NUM_FILTERS];
 
-float32_t cq_last[9];
-float32_t cq_curr[9];
+float32_t cq_last[NUM_FILTERS];
+float32_t cq_curr[NUM_FILTERS];
 
-float32_t cq_avg[9];
+float32_t cq_avg[NUM_FILTERS];
 
 // hamming-windowed cosine and sine tables
 // Table length depends on frequency
@@ -68,14 +73,14 @@ float32_t **cosSinHammTable[NUM_FILTERS] = {(float**)cosSinHammF0, (float**)cosS
 																						(float**)cosSinHammF8 };
 
 // Output variable that holds bin power of selected frequencies
-float32_t cq_out[9];
-float32_t cq_max[9];
-float32_t cq_raw[9];
-float32_t cq_out_last[9];
+float32_t cq_out[NUM_FILTERS];
+float32_t cq_max[NUM_FILTERS];
+float32_t cq_raw[NUM_FILTERS];
+float32_t cq_out_last[NUM_FILTERS];
 
+float32_t maxima_window[NUM_FILTERS][MAXIMA_WINDOW_SIZE];
 void updateMaxima(void);
 void updateAvg(int freq, int sample_num);
-
 
 //====================================================================================
 //	FUNCTION DEFINITIONS
@@ -86,7 +91,7 @@ void CQT_Init(void) {
 	pin_init();
 	
 	// Fill up sin/cos and hamm tables for each freq
-	for(j = 9; j < NUM_FILTERS; j++) {
+	for(j = 0; j < NUM_FILTERS; j++) {
 		for(i = 0; i < Nfreq[j]; i++) {
 			cosSinHammTable[j][0][i] = (0.54 - 0.46*cos(twoPi * i / Nfreq[j])) * cos(twoPi * i * Q / Nfreq[j]);
 			cosSinHammTable[j][1][i] = (0.54 - 0.46*cos(twoPi * i / Nfreq[j])) * sin(twoPi * i * Q / Nfreq[j]);
@@ -99,7 +104,7 @@ void CQT_Process(void) {
 	int i, j;
 	
 	// zero out output buffer from prev iteration
-	for(i = 0; i < 8; i++) {
+	for(i = 0; i < NUM_FILTERS; i++) {
 		cq_real[i] = 0.0f;
 		cq_imag[i] = 0.0f;
 	}
@@ -118,12 +123,12 @@ void CQT_Process(void) {
 		input = ((float32_t)AutoSampler_GetReading()-(float32_t)2048.0)/(float32_t)2048.0;
 		
 		// Sum each flter until Nfreq, or the samples needed for the filter
-		if(i < Nfreq[0]) {
-			cq_real[0] += input * cosSinHammTable[0][0][i];
-			cq_imag[0] -= input * cosSinHammTable[0][1][i];
-		}
+//		if(i < Nfreq[0]) {
+//			cq_real[0] += input * cosSinHammTable[0][0][i];
+//			cq_imag[0] -= input * cosSinHammTable[0][1][i];
+//		}
 		
-		for(j = 1; j < 9; j++) {
+		for(j = 0; j < NUM_FILTERS; j++) {
 			cq_real[j] += input * cosSinHammTable[j][0][i % Nfreq[j]];
 			cq_imag[j] -= input * cosSinHammTable[j][1][i % Nfreq[j]];		
 			updateAvg(j, i);
@@ -135,7 +140,7 @@ void CQT_Process(void) {
 	
 	cq_raw[0] = (cq_real[0]*cq_real[0] + cq_imag[0]*cq_imag[0])/(Nfreq[0]);
 
-	for (i = 0; i < 9; i++)
+	for (i = 0; i < NUM_FILTERS; i++)
 	{
 		cq_out_last[i] = cq_out[i];
 		cq_out[i] = CQ_ALPHA * cq_out_last[i] + (1.0f - CQ_ALPHA) * cq_raw[i];
@@ -144,16 +149,34 @@ void CQT_Process(void) {
 	updateMaxima();
 }
 
-void updateMaxima()
+void updateMaxima(void)
 {
-	int i;
+	int i, j;
 	
-	for (i = 0; i < 9; i++)
+	if (maxima_window_counter < (MAXIMA_WINDOW_SIZE - 1))
 	{
-		if (cq_out[i] > cq_max[i])
+		maxima_window_counter++;
+	}
+	else
+	{	
+		maxima_window_counter = 0;
+	}		
+	
+	for (i = 0; i < NUM_FILTERS; i++)
+	{
+		float32_t temp = 0;
+
+		maxima_window[i][maxima_window_counter] = cq_out[i];
+
+		for (j = 0; j < MAXIMA_WINDOW_SIZE; j++)
 		{
-			cq_max[i] = cq_out[i];
+			if (temp < maxima_window[i][j])
+			{
+				temp = maxima_window[i][j];
+			}				
 		}
+
+		cq_max[i] = MAXIMA_ALPHA * cq_max[i] + (1 - MAXIMA_ALPHA) * temp;
 	}
 }
 
