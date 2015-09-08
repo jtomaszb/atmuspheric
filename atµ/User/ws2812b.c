@@ -26,6 +26,7 @@ uint8_t gPixelBrightness[NUM_STRIPS * STRIP_LEN];
 
 uint8_t curr_strip = 0;
 uint8_t dma_ready = 1;
+uint8_t led_transfer_complete  = 1;
 
 void WS2812_init(void)
 {
@@ -318,11 +319,33 @@ void WS2812_send(const uint8_t* pixels, const uint8_t* pixel_brightness, const u
 	// PAP: Start DMA transfer after starting the timer. This prevents the
 	// DMA/PWM from dropping the first bit.
 	DMA_Cmd(DMA_STREAM, ENABLE); 			// enable DMA channel 5
+	
 	while(!DMA_GetFlagStatus(DMA_STREAM, DMA_TCIF)); 	// wait until transfer complete
 	TIM_Cmd(PWM_TIMER, DISABLE); 					// disable Timer 3
 	DMA_Cmd(DMA_STREAM, DISABLE); 			// disable DMA channel 5
 	DMA_ClearFlag(DMA_STREAM, DMA_TCIF); 				// clear DMA1 Channel 5 transfer complete flag
 }
+
+//void DMA1_Channel5_IRQHandler(void)
+//{
+//  //Test on DMA1 Channel1 Transfer Complete interrupt
+//  if(DMA_GetFlagStatus(DMA_STREAM, DMA_TCIF))
+//  {
+//        dma_ready = 1;
+
+//        if (curr_strip < (NUM_STRIPS - 1))
+//        {
+//            curr_strip++;
+//        }
+//        else
+//        {
+//            curr_strip = 0;
+//						led_transfer_complete = 1;
+//        }
+//        //Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
+//        DMA_ClearFlag(DMA_STREAM, DMA_TCIF);                 // clear DMA transfer complete flag
+//  }
+//}
 
 void WS2812_setStripLevel(uint8_t strip_num, uint8_t level)
 {

@@ -93,7 +93,16 @@ int main(void) {
 		for (i = 0; i < NUM_STRIPS; i++)
 		{
 			if (height[i] < prev_height[i])
-				height[i] = prev_height[i] - 1;
+				{
+					if (prev_height[i] <= LEVELS_PER_PIXEL)
+					{
+						height[i] =  0;
+					}
+					else
+					{	
+						height[i] = prev_height[i] - LEVELS_PER_PIXEL;
+					}
+				}
 		}
 		
 		for(i = 0; i < NUM_STRIPS; i++)

@@ -30,8 +30,8 @@
 #define FREQ7_N			(Q * SAMPLEFREQUENCY / FREQ7)
 #define FREQ8_N			(Q * SAMPLEFREQUENCY / FREQ8)
 
-#define CQ_ALPHA		0.01f
-#define MAXIMA_ALPHA 0.9f
+#define CQ_ALPHA		0.5f
+#define MAXIMA_ALPHA 0.99f
 
 #define MAXIMA_WINDOW_SIZE 256
 
@@ -229,21 +229,13 @@ void CQT_Process(void) {
 void updateMaxima(void)
 {
 	int i, j;
-	
-	if (maxima_window_counter < (MAXIMA_WINDOW_SIZE - 1))
-	{
-		maxima_window_counter++;
-	}
-	else
-	{	
-		maxima_window_counter = 0;
-	}		
+	maxima_window_counter++;
 	
 	for (i = 0; i < NUM_FILTERS; i++)
 	{
 		float32_t temp = 0;
 
-		maxima_window[i][maxima_window_counter] = cq_out[i];
+		maxima_window[i][maxima_window_counter % MAXIMA_WINDOW_SIZE] = cq_out[i];
 
 		for (j = 0; j < MAXIMA_WINDOW_SIZE; j++)
 		{
