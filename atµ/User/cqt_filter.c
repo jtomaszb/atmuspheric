@@ -8,7 +8,7 @@
 
 #define twoPi 			6.28318530718f
 #define Q  					2
-#define NUM_FILTERS 7
+#define NUM_FILTERS 9	
 
 #define FREQ0				100 
 #define FREQ1				182 
@@ -30,7 +30,10 @@
 #define FREQ7_N			(Q * SAMPLEFREQUENCY / FREQ7)
 #define FREQ8_N			(Q * SAMPLEFREQUENCY / FREQ8)
 
-#define CQ_ALPHA		0.01f
+#define CQ_ALPHA		0.5f
+#define MAXIMA_ALPHA 0.99f
+
+#define MAXIMA_WINDOW_SIZE 256
 
 // Utility arrays with precalculated filter frequencies and corresponding sample size
 int filterFreq[9] = {FREQ0, FREQ1, FREQ2, FREQ3, FREQ4, FREQ5, FREQ6, FREQ7, FREQ8};
@@ -38,6 +41,8 @@ int Nfreq[9] = {FREQ0_N, FREQ1_N, FREQ2_N, FREQ3_N, FREQ4_N, FREQ5_N, FREQ6_N, F
 
 // The lowest frequency needs the largets number of samples
 int samplesNeeded = FREQ0_N;
+
+int maxima_window_counter = 0;
 
 // Intermediate value holders
 float32_t cq_real[9];
@@ -75,6 +80,8 @@ float32_t cq_out[9];
 float32_t cq_max[9];
 float32_t cq_raw[9];
 float32_t cq_out_last[9];
+
+float32_t maxima_window[NUM_FILTERS][MAXIMA_WINDOW_SIZE];
 
 void updateMaxima();
 void updateAvg(int freq, int sample_num);
@@ -238,16 +245,27 @@ void CQT_Process(void) {
 	updateMaxima();
 }
 
-void updateMaxima()
+void updateMaxima(void)
 {
-	int i;
+	int i, j;
+	
+	maxima_window_counter++;
 	
 	for (i = 0; i < 9; i++)
 	{
-		if (cq_out[i] > cq_max[i])
+		float32_t temp = 0;
+
+		maxima_window[i][maxima_window_counter % MAXIMA_WINDOW_SIZE] = cq_out[i];
+
+		for (j = 0; j < MAXIMA_WINDOW_SIZE; j++)
 		{
-			cq_max[i] = cq_out[i];
+			if (temp < maxima_window[i][j])
+			{
+				temp = maxima_window[i][j];
+			}				
 		}
+
+		cq_max[i] = MAXIMA_ALPHA * cq_max[i] + (1 - MAXIMA_ALPHA) * temp;
 	}
 }
 

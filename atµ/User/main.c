@@ -31,7 +31,7 @@ int main(void) {
 	CQT_Init();
 	
 	// Run statup sequence
-	startup1();
+//	startup1();
 	
 	// clear pixels
 	for(k = 0; k < 7; k++) {
@@ -41,7 +41,7 @@ int main(void) {
 	WS2812_updateLEDs();
 	
 	// run second startup
-	startup2();
+//	startup2();
 	
 	// Set initial color on tubes
 	for(k = 0; k < 7; k++) {
@@ -93,19 +93,18 @@ int main(void) {
 		for (i = 0; i < NUM_STRIPS; i++)
 		{
 			if (height[i] < prev_height[i])
-				height[i] = prev_height[i] - 1;
+				{
+					if (prev_height[i] <= LEVELS_PER_PIXEL)
+					{
+						height[i] =  0;
+					}
+					else
+					{	
+						height[i] = prev_height[i] - LEVELS_PER_PIXEL;
+					}
+				}
 		}
 		
-		//====== FUN COLOR STUFF ===========//
-		// Use height to set strip whiter as it goes higher
-		for (i = 0; i < 7; i++)
-		{
-			for (l = 0; l < STRIP_LEN; l++)
-			{
-					WS2812_setPixelColor(height[i]*20, height[i]*20, height[i]*20, i, l);	
-			}				
-		}
-
 		for(i = 0; i < NUM_STRIPS; i++)
 		{
 			if(height[i] > STRIP_LEN * LEVELS_PER_PIXEL)
